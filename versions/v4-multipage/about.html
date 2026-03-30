@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Features — Fair Market Value Premium Portfolio Tracking</title>
+  <title>About — Fair Market Value Premium Portfolio Tracking</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -116,7 +116,19 @@
       margin-bottom: 1rem;
     }
 
-    .feature-card {
+    .about-section {
+      padding: 80px 0;
+    }
+
+    .about-intro {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: var(--fmv-text);
+      margin-bottom: 4rem;
+      max-width: 900px;
+    }
+
+    .value-card {
       background: #fff;
       border: 1px solid var(--fmv-border);
       border-radius: 24px;
@@ -125,13 +137,13 @@
       height: 100%;
     }
 
-    .feature-card:hover {
+    .value-card:hover {
       border-color: var(--fmv-gold);
       transform: translateY(-8px);
       box-shadow: var(--shadow-premium);
     }
 
-    .feature-icon {
+    .value-icon {
       font-size: 2.5rem;
       color: var(--fmv-gold);
       background: var(--fmv-gold-light);
@@ -144,8 +156,8 @@
       margin-bottom: 1.5rem;
     }
 
-    .feature-card h4 { margin-bottom: 1rem; }
-    .feature-card p { color: var(--fmv-muted); line-height: 1.8; }
+    .value-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+    .value-card p { color: var(--fmv-muted); line-height: 1.8; }
 
     .footer-premium {
       background: var(--fmv-white);
@@ -197,7 +209,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navMain">
       <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item"><a class="nav-link nav-link-fmv active" href="features.html">Features</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="features.html">Features</a></li>
         <li class="nav-item"><a class="nav-link nav-link-fmv" href="how-it-works.html">How It Works</a></li>
         <li class="nav-item"><a class="nav-link nav-link-fmv" href="popular-coins.html">Coins</a></li>
         <li class="nav-item"><a class="nav-link nav-link-fmv" href="pricing.html">Pricing</a></li>
@@ -211,72 +223,55 @@
 
 <main>
 
+  <!-- ===============================================
+       PAGE HEADER
+  =============================================== -->
   <header class="page-header">
     <div class="container">
-      <h1 class="section-title">Powerful Features for Collectors</h1>
-      <p class="text-muted fs-5">Everything you need to track, value, and manage your precious metal collection with confidence.</p>
+      <h1 class="section-title">About</h1>
+      <p class="text-muted fs-5">Learn more about our mission and vision for precious metals portfolio management.</p>
     </div>
   </header>
 
-  <section class="py-5">
+  <!-- ===============================================
+       ABOUT CONTENT
+   =============================================== -->
+  <section class="about-section">
     <div class="container">
-      <div class="row g-5">
-        <!-- Feature 1 -->
+      <div class="about-intro">
+        <p>At FairMarketValue.gold, our mission is simple: to empower investors and coin enthusiasts with the tools and transparency they need to confidently manage their precious metal portfolios. We believe everyone deserves independent, accurate valuations and insights—whether you're a seasoned numismatist or just beginning your wealth-building journey.</p>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <!-- Our Mission Card -->
         <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-search"></i></div>
-            <h4>Real-Time Valuation</h4>
-            <p>We combine live spot prices with verified mint data and recent auction results to reflect true Fair Market Value. No more manual spreadsheets or outdated estimates.</p>
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-target"></i></div>
+            <h3>Our Mission</h3>
+            <p>Empower investors to track precious metal portfolios with ease and precision. We provide tools and insights to set profit goals, access market data, and make informed decisions while staying organized and up-to-date on legal and market developments.</p>
           </div>
         </div>
 
-        <!-- Feature 2 -->
+        <!-- Our Vision Card -->
         <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-shield-lock"></i></div>
-            <h4>Independent & Private</h4>
-            <p>Unlike dealers, we don't sell coins. Your data is encrypted and strictly private. We are your unbiased single source of truth.</p>
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-eye"></i></div>
+            <h3>Our Vision</h3>
+            <p>Make investing in precious metals simple, accessible, and rewarding for all. We aim to democratize access to financial benefits through transparent, accurate information and a user-friendly platform that puts control back in your hands.</p>
           </div>
         </div>
 
-        <!-- Feature 3 -->
+        <!-- Our Commitment Card -->
         <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-bell"></i></div>
-            <h4>Smart Price Alerts</h4>
-            <p>Set profit goals and receive instant notifications when your holdings reach your targets. Stay ahead of market movements.</p>
-          </div>
-        </div>
-
-        <!-- Feature 4 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-bank"></i></div>
-            <h4>IRA & Compliance</h4>
-            <p>Generate professional reports suitable for IRA custodians and insurance documentation with one click. Comply effortlessly.</p>
-          </div>
-        </div>
-
-        <!-- Feature 5 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-stars"></i></div>
-            <h4>Numismatic Premium Tracking</h4>
-            <p>Track the historical performance of your collectible premiums over spot price, powered by PCGS/NGC data and market analysis.</p>
-          </div>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-pie-chart-fill"></i></div>
-            <h4>Portfolio Dashboard</h4>
-            <p>View comprehensive analytics including distribution, performance metrics, and targets in one intuitive dashboard interface.</p>
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-shield-check"></i></div>
+            <h3>Our Commitment</h3>
+            <p>Provide independent, unbiased valuations backed by real-time market data and expert analysis. Whether you're protecting retirement savings or diversifying investments, we're your trusted partner for accurate valuations every single day.</p>
           </div>
         </div>
       </div>
 
-      <div class="text-center mt-5">
+      <div class="text-center mt-5 pt-5">
         <a href="pricing.html" class="btn btn-gold px-5 py-3 fs-5">Start Your Free Trial</a>
       </div>
     </div>

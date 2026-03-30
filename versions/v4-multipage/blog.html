@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Features — Fair Market Value Premium Portfolio Tracking</title>
+  <title>Blog — Fair Market Value Premium Portfolio Tracking</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -116,36 +116,74 @@
       margin-bottom: 1rem;
     }
 
-    .feature-card {
+    .blog-section {
+      padding: 80px 0;
+    }
+
+    .blog-card {
       background: #fff;
       border: 1px solid var(--fmv-border);
       border-radius: 24px;
-      padding: 40px;
+      overflow: hidden;
       transition: all 0.3s ease;
       height: 100%;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
     }
 
-    .feature-card:hover {
+    .blog-card:hover {
       border-color: var(--fmv-gold);
       transform: translateY(-8px);
       box-shadow: var(--shadow-premium);
     }
 
-    .feature-icon {
-      font-size: 2.5rem;
-      color: var(--fmv-gold);
-      background: var(--fmv-gold-light);
-      width: 64px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 16px;
-      margin-bottom: 1.5rem;
+    .blog-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
     }
 
-    .feature-card h4 { margin-bottom: 1rem; }
-    .feature-card p { color: var(--fmv-muted); line-height: 1.8; }
+    .blog-content {
+      padding: 30px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-date {
+      font-size: 0.85rem;
+      color: var(--fmv-muted);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+
+    .blog-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .blog-excerpt {
+      color: var(--fmv-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    .blog-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
 
     .footer-premium {
       background: var(--fmv-white);
@@ -197,7 +235,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navMain">
       <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item"><a class="nav-link nav-link-fmv active" href="features.html">Features</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="features.html">Features</a></li>
         <li class="nav-item"><a class="nav-link nav-link-fmv" href="how-it-works.html">How It Works</a></li>
         <li class="nav-item"><a class="nav-link nav-link-fmv" href="popular-coins.html">Coins</a></li>
         <li class="nav-item"><a class="nav-link nav-link-fmv" href="pricing.html">Pricing</a></li>
@@ -211,72 +249,50 @@
 
 <main>
 
+  <!-- ===============================================
+       PAGE HEADER
+   =============================================== -->
   <header class="page-header">
     <div class="container">
-      <h1 class="section-title">Powerful Features for Collectors</h1>
-      <p class="text-muted fs-5">Everything you need to track, value, and manage your precious metal collection with confidence.</p>
+      <h1 class="section-title">Blog</h1>
+      <p class="text-muted fs-5">Insights, tips, and news for precious metals investors and collectors.</p>
     </div>
   </header>
 
-  <section class="py-5">
+  <!-- ===============================================
+       BLOG POSTS
+   =============================================== -->
+  <section class="blog-section">
     <div class="container">
       <div class="row g-5">
-        <!-- Feature 1 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-search"></i></div>
-            <h4>Real-Time Valuation</h4>
-            <p>We combine live spot prices with verified mint data and recent auction results to reflect true Fair Market Value. No more manual spreadsheets or outdated estimates.</p>
-          </div>
+        <!-- Article 1 -->
+        <div class="col-md-6 col-lg-6">
+          <a href="#" class="blog-card">
+            <img src="https://fairmarketvdev.wpenginepowered.com/wp-content/uploads/2024/05/inflation-gold-silver.jpg" alt="Gold and silver with inflation charts" class="blog-image" />
+            <div class="blog-content">
+              <span class="blog-badge">Featured</span>
+              <h3>The Hidden Cost of Inflation: Why Taxing Gold and Silver is Unfair</h3>
+              <p class="blog-date">May 31, 2024</p>
+              <p class="blog-excerpt">Explore how inflation impacts precious metals investments and the implications of potential taxation policies on gold and silver holdings.</p>
+            </div>
+          </a>
         </div>
 
-        <!-- Feature 2 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-shield-lock"></i></div>
-            <h4>Independent & Private</h4>
-            <p>Unlike dealers, we don't sell coins. Your data is encrypted and strictly private. We are your unbiased single source of truth.</p>
-          </div>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-bell"></i></div>
-            <h4>Smart Price Alerts</h4>
-            <p>Set profit goals and receive instant notifications when your holdings reach your targets. Stay ahead of market movements.</p>
-          </div>
-        </div>
-
-        <!-- Feature 4 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-bank"></i></div>
-            <h4>IRA & Compliance</h4>
-            <p>Generate professional reports suitable for IRA custodians and insurance documentation with one click. Comply effortlessly.</p>
-          </div>
-        </div>
-
-        <!-- Feature 5 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-stars"></i></div>
-            <h4>Numismatic Premium Tracking</h4>
-            <p>Track the historical performance of your collectible premiums over spot price, powered by PCGS/NGC data and market analysis.</p>
-          </div>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-pie-chart-fill"></i></div>
-            <h4>Portfolio Dashboard</h4>
-            <p>View comprehensive analytics including distribution, performance metrics, and targets in one intuitive dashboard interface.</p>
-          </div>
+        <!-- Article 2 -->
+        <div class="col-md-6 col-lg-6">
+          <a href="#" class="blog-card">
+            <img src="https://fairmarketvdev.wpenginepowered.com/wp-content/uploads/2023/05/Silver-and-gold-768x509.jpg" alt="Physical gold and silver coins" class="blog-image" />
+            <div class="blog-content">
+              <span class="blog-badge">Most Viewed</span>
+              <h3>10 Tips for Tracking Your Physical Gold and Silver</h3>
+              <p class="blog-date">May 1, 2023</p>
+              <p class="blog-excerpt">Essential strategies for organizing and monitoring your precious metal collection, from inventory management to value tracking and security considerations.</p>
+            </div>
+          </a>
         </div>
       </div>
 
-      <div class="text-center mt-5">
+      <div class="text-center mt-5 pt-5">
         <a href="pricing.html" class="btn btn-gold px-5 py-3 fs-5">Start Your Free Trial</a>
       </div>
     </div>

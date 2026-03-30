@@ -47,6 +47,7 @@
     h1, h2, h3, h4, h5, h6 {
       font-family: var(--font-heading);
       color: var(--fmv-dark);
+      font-weight: 700;
       margin: 0;
     }
 
@@ -112,18 +113,18 @@
     }
 
     .hero-section {
-      padding: 120px 0 80px;
+      padding: 100px 0 80px;
       text-align: center;
     }
 
     .pricing-headline {
-      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
       margin-bottom: 1.5rem;
       letter-spacing: -0.02em;
     }
 
     .pricing-subline {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       color: var(--fmv-muted);
       max-width: 600px;
       margin: 0 auto 3rem;
@@ -142,6 +143,17 @@
       transform: translateY(-12px);
       box-shadow: var(--shadow-lg);
       border-color: var(--fmv-gold);
+    }
+
+    .pricing-card-pro {
+      border: 2px solid var(--fmv-gold);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(197, 160, 40, 0.02) 100%);
+      box-shadow: 0 0 0 1px rgba(197, 160, 40, 0.1), var(--shadow-lg);
+    }
+
+    .pricing-card-pro:hover {
+      border-color: var(--fmv-gold);
+      box-shadow: 0 0 0 1px rgba(197, 160, 40, 0.2), 0 20px 40px rgba(197, 160, 40, 0.15);
     }
 
     .price-value {
@@ -170,7 +182,7 @@
       align-items: flex-start;
       gap: 14px;
       margin-bottom: 16px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--fmv-text);
       line-height: 1.5;
     }
@@ -241,7 +253,21 @@
 
     .footer-link:hover { color: var(--fmv-gold); }
 
-    .d-none-toggle { display: none !important; }
+
+
+    .pricing-card-wrapper {
+      max-width: 550px;
+    }
+
+    .feature-bullet {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: var(--fmv-gold);
+      border-radius: 2px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
   </style>
 </head>
 
@@ -285,35 +311,68 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-10">
-          <h1 class="pricing-headline">Simple, Transparent Pricing</h1>
+          <h1 class="pricing-headline">Choose Your Plan</h1>
           <p class="pricing-subline">No hidden fees. No credit card required. Start your free trial today.</p>
         </div>
       </div>
 
-      <div class="row g-5 justify-content-center mt-2">
-        <!-- Monthly Card -->
-        <div class="col-lg-7 pricing-card-wrapper" id="card-monthly">
+      <div class="row g-5 justify-content-center">
+        <!-- Free Tier Card -->
+        <div class="col-lg-5 pricing-card-wrapper">
           <div class="pricing-card">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-              <h3 class="h4 m-0">Standard Access</h3>
-              <span class="badge bg-light text-dark">Starter</span>
+            <h3 class="h5 text-center mb-4">Free Tier</h3>
+            <div class="text-center mb-4">
+              <span class="price-value">$0</span>
+              <span class="price-period">forever</span>
             </div>
-            <div class="mb-3">
+            <p class="text-center text-muted small mb-4">Perfect for getting started</p>
+            
+            <button class="btn btn-gold w-100 mb-5 py-3" data-bs-toggle="modal" data-bs-target="#trialModal">Get Started Free</button>
+            
+            <ul class="feature-list">
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-graph-up"></i></div><span>Live spot prices with numismatic premium</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-graph-up-arrow"></i></div><span>Basic portfolio dashboard & performance tracking</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-bell"></i></div><span>Price alerts for gold and silver</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-coin"></i></div><span>Popular coins browser (bullion + collectibles)</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-award"></i></div><span>PCGS/NGC graded coin support</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-shield-lock"></i></div><span>Secure encrypted portfolio storage</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-file-text"></i></div><span>Basic reports for IRA & insurance</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Pro Tier Card -->
+        <div class="col-lg-5 pricing-card-wrapper">
+          <div class="pricing-card pricing-card-pro">
+            <h3 class="h5 text-center mb-4">Pro Tier</h3>
+            <div class="text-center mb-2">
               <span class="price-value">$9.95</span>
               <span class="price-period">/ month</span>
             </div>
-            <p class="text-muted mb-5">Everything you need to track and value your precious metal assets.</p>
+            <p class="text-center text-muted small mb-4">Everything in Free, plus:</p>
             
             <button class="btn btn-gold w-100 mb-5 py-3" data-bs-toggle="modal" data-bs-target="#trialModal">Start Free Trial</button>
             
             <ul class="feature-list">
-              <li class="feature-item"><div class="feature-icon"><i class="bi bi-graph-up"></i></div><span>Live <strong>spot prices</strong> + <strong>premium</strong> tracking</span></li>
-              <li class="feature-item"><div class="feature-icon"><i class="bi bi-search"></i></div><span><strong>Portfolio Dashboard</strong> with performance</span></li>
-              <li class="feature-item"><div class="feature-icon"><i class="bi bi-bell"></i></div><span><strong>Price alerts</strong> for profit goals</span></li>
-              <li class="feature-item"><div class="feature-icon"><i class="bi bi-shield-lock"></i></div><span><strong>Secure</strong> encrypted storage</span></li>
-              <li class="feature-item"><div class="feature-icon"><i class="bi bi-file-pdf"></i></div><span>Reports for <strong>IRA custodians</strong></span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-graph-up"></i></div><span>Unlimited portfolio items & advanced analytics</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-bullseye"></i></div><span>Custom profit goal alerts & targets</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-file-earmark-pdf"></i></div><span>Detailed valuation reports with recent sales data</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-diamond"></i></div><span>Full PCGS/NGC context & numismatic insights</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-headset"></i></div><span>Priority support & export options (CSV/PDF)</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-phone"></i></div><span>Multi-device access</span></li>
+              <li class="feature-item"><div class="feature-icon"><i class="bi bi-star"></i></div><span>All future features included</span></li>
             </ul>
           </div>
+        </div>
+      </div>
+
+      <!-- Reassurance Copy -->
+      <div class="row justify-content-center mt-5">
+        <div class="col-lg-8 text-center">
+          <p class="text-muted small">
+            <i class="bi bi-shield-check text-success me-2"></i>
+            No dealer ties – Independent valuation. Your data is always secure and never shared.
+          </p>
         </div>
       </div>
     </div>
@@ -349,7 +408,9 @@
       <div class="col-6 col-lg-2 footer-col">
         <h5>Company</h5>
         <a href="index.html" class="footer-link">Home</a>
-        <a href="#" class="footer-link">Contact</a>
+        <a href="about.html" class="footer-link">About</a>
+        <a href="blog.html" class="footer-link">Blog</a>
+        <a href="contact.html" class="footer-link">Contact</a>
       </div>
       <div class="col-lg-4 footer-col">
         <h5>Stay Updated</h5>

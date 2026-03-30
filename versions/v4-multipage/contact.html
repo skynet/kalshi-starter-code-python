@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Features — Fair Market Value Premium Portfolio Tracking</title>
+  <title>Contact — Fair Market Value Premium Portfolio Tracking</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -116,36 +116,59 @@
       margin-bottom: 1rem;
     }
 
-    .feature-card {
-      background: #fff;
+    .contact-section {
+      padding: 80px 0;
+    }
+
+    .contact-intro {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--fmv-text);
+      margin-bottom: 3rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .form-control-fmv {
       border: 1px solid var(--fmv-border);
-      border-radius: 24px;
-      padding: 40px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-family: var(--font-body);
+      color: var(--fmv-text);
+      background-color: var(--fmv-bg);
       transition: all 0.3s ease;
-      height: 100%;
     }
 
-    .feature-card:hover {
+    .form-control-fmv:focus {
       border-color: var(--fmv-gold);
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-premium);
+      box-shadow: 0 0 0 3px var(--fmv-gold-light);
+      color: var(--fmv-text);
     }
 
-    .feature-icon {
-      font-size: 2.5rem;
-      color: var(--fmv-gold);
-      background: var(--fmv-gold-light);
-      width: 64px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 16px;
+    .form-control-fmv::placeholder {
+      color: var(--fmv-muted);
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: var(--fmv-dark);
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
       margin-bottom: 1.5rem;
     }
 
-    .feature-card h4 { margin-bottom: 1rem; }
-    .feature-card p { color: var(--fmv-muted); line-height: 1.8; }
+    .contact-form {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--fmv-surface);
+      padding: 40px;
+      border-radius: 24px;
+      border: 1px solid var(--fmv-border);
+    }
 
     .footer-premium {
       background: var(--fmv-white);
@@ -197,7 +220,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navMain">
       <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item"><a class="nav-link nav-link-fmv active" href="features.html">Features</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="features.html">Features</a></li>
         <li class="nav-item"><a class="nav-link nav-link-fmv" href="how-it-works.html">How It Works</a></li>
         <li class="nav-item"><a class="nav-link nav-link-fmv" href="popular-coins.html">Coins</a></li>
         <li class="nav-item"><a class="nav-link nav-link-fmv" href="pricing.html">Pricing</a></li>
@@ -211,72 +234,97 @@
 
 <main>
 
+  <!-- ===============================================
+       PAGE HEADER
+   =============================================== -->
   <header class="page-header">
     <div class="container">
-      <h1 class="section-title">Powerful Features for Collectors</h1>
-      <p class="text-muted fs-5">Everything you need to track, value, and manage your precious metal collection with confidence.</p>
+      <h1 class="section-title">Contact</h1>
+      <p class="text-muted fs-5">We'd love to hear from you. Get in touch with our team.</p>
     </div>
   </header>
 
-  <section class="py-5">
+  <!-- ===============================================
+       CONTACT FORM
+   =============================================== -->
+  <section class="contact-section">
     <div class="container">
-      <div class="row g-5">
-        <!-- Feature 1 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-search"></i></div>
-            <h4>Real-Time Valuation</h4>
-            <p>We combine live spot prices with verified mint data and recent auction results to reflect true Fair Market Value. No more manual spreadsheets or outdated estimates.</p>
-          </div>
-        </div>
-
-        <!-- Feature 2 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-shield-lock"></i></div>
-            <h4>Independent & Private</h4>
-            <p>Unlike dealers, we don't sell coins. Your data is encrypted and strictly private. We are your unbiased single source of truth.</p>
-          </div>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-bell"></i></div>
-            <h4>Smart Price Alerts</h4>
-            <p>Set profit goals and receive instant notifications when your holdings reach your targets. Stay ahead of market movements.</p>
-          </div>
-        </div>
-
-        <!-- Feature 4 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-bank"></i></div>
-            <h4>IRA & Compliance</h4>
-            <p>Generate professional reports suitable for IRA custodians and insurance documentation with one click. Comply effortlessly.</p>
-          </div>
-        </div>
-
-        <!-- Feature 5 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-stars"></i></div>
-            <h4>Numismatic Premium Tracking</h4>
-            <p>Track the historical performance of your collectible premiums over spot price, powered by PCGS/NGC data and market analysis.</p>
-          </div>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="feature-icon"><i class="bi bi-pie-chart-fill"></i></div>
-            <h4>Portfolio Dashboard</h4>
-            <p>View comprehensive analytics including distribution, performance metrics, and targets in one intuitive dashboard interface.</p>
-          </div>
-        </div>
+      <div class="contact-intro">
+        <p>Thank you for visiting our website. If you have any questions, comments, or feedback, please feel free to use the contact form below to get in touch with us. We always strive to respond to inquiries as quickly as possible and look forward to hearing from you. Thank you for your interest in FairMarketValue.gold</p>
       </div>
 
-      <div class="text-center mt-5">
+      <form class="contact-form" method="post" action="#">
+        <div class="row g-4 mb-4">
+          <div class="col-md-6">
+            <label for="firstName" class="form-label">First Name <span style="color: var(--fmv-gold);">*</span></label>
+            <input 
+              type="text" 
+              class="form-control form-control-fmv" 
+              id="firstName" 
+              name="firstName"
+              placeholder="John"
+              required 
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label">Last Name <span style="color: var(--fmv-gold);">*</span></label>
+            <input 
+              type="text" 
+              class="form-control form-control-fmv" 
+              id="lastName" 
+              name="lastName"
+              placeholder="Doe"
+              required 
+            />
+          </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email <span style="color: var(--fmv-gold);">*</span></label>
+            <input 
+              type="email" 
+              class="form-control form-control-fmv" 
+              id="email" 
+              name="email"
+              placeholder="you@example.com"
+              required 
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="phone" class="form-label">Phone <span style="color: var(--fmv-gold);">*</span></label>
+            <input 
+              type="tel" 
+              class="form-control form-control-fmv" 
+              id="phone" 
+              name="phone"
+              placeholder="(555) 000-0000"
+              required 
+            />
+          </div>
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="message" class="form-label">Message <span style="color: var(--fmv-gold);">*</span></label>
+          <textarea 
+            class="form-control form-control-fmv" 
+            id="message" 
+            name="message"
+            placeholder="Your message here..."
+            rows="6"
+            required 
+          ></textarea>
+        </div>
+
+        <div class="d-flex gap-3 align-items-center">
+          <button type="submit" class="btn btn-gold px-5 py-3 fw-bold">Send Message</button>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-muted" title="Follow us on Instagram">
+            <i class="bi bi-instagram fs-5"></i>
+          </a>
+        </div>
+      </form>
+
+      <div class="text-center mt-5 pt-5">
         <a href="pricing.html" class="btn btn-gold px-5 py-3 fs-5">Start Your Free Trial</a>
       </div>
     </div>
