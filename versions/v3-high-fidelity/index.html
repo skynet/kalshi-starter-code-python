@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fair Market Value — Premium Precious Metals Portfolio Tracking</title>
+
+  <!-- Google Fonts: Cinzel + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <style>
+    :root {
+      /* Color Palette */
+      --fmv-gold:       #C5A028;
+      --fmv-gold-dark:  #A68720;
+      --fmv-gold-light: rgba(197, 160, 40, 0.1);
+      --fmv-gold-glow:  rgba(197, 160, 40, 0.03);
+      --fmv-platinum:   #F2F3F4;
+      --fmv-dark:       #111827;
+      --fmv-text:       #4B5563;
+      --fmv-muted:      #9CA3AF;
+      --fmv-bg:         #FFFFFF;
+      --fmv-surface:    #F9FAFB;
+      --fmv-border:     #E5E7EB;
+      
+      /* Typography */
+      --font-heading:   'Cinzel', serif;
+      --font-body:      'Plus Jakarta Sans', sans-serif;
+      
+      /* Shadows & Radius */
+      --radius-lg:      32px;
+      --radius-md:      24px;
+      --radius-sm:      16px;
+      --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
+      --shadow-gold:    0 10px 30px rgba(197, 160, 40, 0.15);
+      
+      --glass-bg:       rgba(255, 255, 255, 0.7);
+      --glass-border:   rgba(197, 160, 40, 0.2);
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--fmv-bg);
+      color: var(--fmv-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--fmv-dark);
+      font-weight: 700;
+    }
+
+    /* --- Animations --- */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .float-anim {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* --- Navbar --- */
+    .navbar-fmv {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--fmv-border);
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+    .navbar-brand-fmv {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-container {
+      width: 40px;
+      height: 40px;
+      background: var(--fmv-gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: var(--shadow-gold);
+    }
+    .logo-text {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--fmv-dark);
+      letter-spacing: 0.05em;
+    }
+    .logo-text span {
+      color: var(--fmv-gold);
+      font-weight: 400;
+    }
+
+    .nav-link-fmv {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--fmv-dark) !important;
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+    .nav-link-fmv:hover { color: var(--fmv-gold) !important; }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark) !important;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-gold);
+    }
+    .btn-gold:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(197, 160, 40, 0.25);
+    }
+
+    /* --- Hero Section --- */
+    .hero-section {
+      padding: 160px 0 100px;
+      position: relative;
+      background: radial-gradient(circle at 80% 20%, var(--fmv-gold-glow) 0%, transparent 40%);
+    }
+    .hero-headline {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      margin-bottom: 2rem;
+      letter-spacing: -0.01em;
+    }
+    .hero-subhead {
+      font-size: 1.25rem;
+      max-width: 580px;
+      margin-bottom: 3rem;
+      color: var(--fmv-text);
+    }
+
+    .hero-visual-wrapper {
+      position: relative;
+    }
+    .hero-main-img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-premium);
+      border: 1px solid var(--fmv-border);
+    }
+    .floating-card {
+      position: absolute;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow-premium);
+      z-index: 10;
+    }
+    .card-portfolio {
+      top: -40px;
+      right: -20px;
+      width: 240px;
+    }
+    .card-value {
+      bottom: 40px;
+      left: -40px;
+      width: 200px;
+    }
+
+    /* --- Bento Features --- */
+    .bento-container {
+      padding: 100px 0;
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-gap: 24px;
+    }
+    .bento-item {
+      background: var(--fmv-white);
+      border: 1px solid var(--fmv-border);
+      border-radius: var(--radius-md);
+      padding: 40px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .bento-item:hover {
+      border-color: var(--fmv-gold);
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-premium);
+    }
+    .bento-item h4 { margin-top: 1.5rem; margin-bottom: 1rem; }
+    .bento-icon {
+      font-size: 2rem;
+      color: var(--fmv-gold);
+      background: var(--fmv-gold-light);
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+    }
+
+    .bento-lg { grid-column: span 8; }
+    .bento-sm { grid-column: span 4; }
+    .bento-md { grid-column: span 6; }
+
+    /* --- Iconic Coins --- */
+    .coin-grid-section {
+      padding: 100px 0;
+      background: var(--fmv-surface);
+    }
+    .coin-card-premium {
+      background: #fff;
+      border: 1px solid var(--fmv-border);
+      border-radius: 24px;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .coin-card-premium:hover {
+      border-color: var(--fmv-gold);
+      box-shadow: var(--shadow-premium);
+    }
+    .coin-img-premium {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      margin: 0 auto 1.5rem;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+    }
+    .value-preview {
+      display: inline-block;
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 4px 10px rgba(197, 160, 40, 0.2);
+    }
+    .premium-tag {
+      font-size: 0.75rem;
+      color: #10B981;
+      font-weight: 700;
+    }
+
+    /* --- FAQ & Rolex Style --- */
+    .faq-section {
+      padding: 100px 0;
+    }
+    .faq-accordion .accordion-item {
+      border: none;
+      background: transparent;
+      margin-bottom: 1rem;
+    }
+    .faq-accordion .accordion-button {
+      background: #fff;
+      border: 1px solid var(--fmv-border);
+      border-radius: 16px !important;
+      padding: 24px;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      box-shadow: none;
+    }
+    .faq-accordion .accordion-button:not(.collapsed) {
+      color: var(--fmv-gold);
+      border-color: var(--fmv-gold);
+    }
+    .faq-accordion .accordion-body {
+      padding: 24px;
+      color: var(--fmv-text);
+      line-height: 1.7;
+    }
+
+    /* --- Footer --- */
+    .footer-premium {
+      background: var(--fmv-white);
+      border-top: 1px solid var(--fmv-border);
+      padding: 80px 0 40px;
+    }
+    .footer-col h5 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fmv-muted);
+      margin-bottom: 1.5rem;
+    }
+    .footer-link {
+      display: block;
+      color: var(--fmv-text);
+      text-decoration: none;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--fmv-gold); }
+    .security-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--fmv-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 992px) {
+      .bento-lg, .bento-sm, .bento-md { grid-column: span 12; }
+      .card-portfolio, .card-value { position: static; width: 100%; margin-top: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===============================================
+     NAVBAR
+=============================================== -->
+<nav class="navbar navbar-expand-lg navbar-fmv sticky-top">
+  <div class="container">
+    <a class="navbar-brand-fmv" href="../../index.html">
+      <div class="logo-container">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">FMV<span>.GOLD</span></div>
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <i class="bi bi-list fs-2"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="#features">Features</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="#how">How It Works</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="#coins">Coins</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="pricing.html">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="whats-my-coin-worth.html">FAQ</a></li>
+        <li class="nav-item ms-lg-4"><a class="nav-link nav-link-fmv fw-bold" href="#">Login</a></li>
+        <li class="nav-item ms-lg-2"><a href="pricing.html" class="btn btn-gold px-4">Sign Up</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<main>
+
+  <!-- ===============================================
+       HERO SECTION
+  =============================================== -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 fade-up">
+          <h1 class="hero-headline">Know the True Value of Your <span style="color:var(--fmv-gold)">Gold & Silver</span> Coins.</h1>
+          <p class="hero-subhead">Stop guessing. Get real-time fair market value for every coin in your stack—instantly. Independent, secure, and built for serious collectors.</p>
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="pricing.html" class="btn btn-gold px-5 py-3 fs-5">Start Free Trial</a>
+            <a href="#how" class="btn btn-outline-dark px-4 py-3 border-2 fw-bold rounded-pill">How It Works</a>
+          </div>
+          <div class="mt-5 d-flex align-items-center gap-4 text-muted small fw-bold">
+            <span><i class="bi bi-shield-check text-success me-2"></i>PCGS/NGC SUPPORT</span>
+            <span><i class="bi bi-bank text-primary me-2"></i>IRA READY</span>
+          </div>
+        </div>
+        <div class="col-lg-6 fade-up" style="transition-delay: 0.2s;">
+          <div class="hero-visual-wrapper">
+            <img src="https://images.unsplash.com/photo-1589758438368-0ad531db3366?auto=format&fit=crop&q=80&w=1200" alt="Gold Coins" class="hero-main-img" />
+            
+            <!-- Floating UI Cards -->
+            <div class="floating-card card-portfolio float-anim">
+              <div class="d-flex justify-content-between mb-3">
+                <span class="small fw-bold text-muted">Total Portfolio</span>
+                <i class="bi bi-graph-up text-success"></i>
+              </div>
+              <h4 class="m-0">$42,850.50</h4>
+              <div class="premium-tag">+12.4% this year</div>
+            </div>
+
+            <div class="floating-card card-value float-anim" style="animation-delay: -3s;">
+              <div class="small fw-bold text-muted mb-2">Live Spot Price</div>
+              <div class="d-flex align-items-baseline gap-2">
+                <h5 class="m-0">$2,342.10</h5>
+                <span class="small text-danger" style="font-size: 0.7rem;">-0.2%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===============================================
+       BENTO FEATURES
+  =============================================== -->
+  <section class="bento-container" id="features">
+    <div class="container">
+      <div class="text-center mb-5 fade-up">
+        <h2 class="display-4 mb-3">Master Your Portfolio</h2>
+        <p class="text-muted fs-5">A comprehensive suite of tools designed for the modern precious metal investor.</p>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Feature 1 -->
+        <div class="bento-item bento-lg fade-up">
+          <div class="row align-items-center">
+            <div class="col-md-7">
+              <div class="bento-icon"><i class="bi bi-search"></i></div>
+              <h4>Real-time Valuation</h4>
+              <p class="text-muted">We combine live spot prices with verified mint data and recent auction results to reflect true Fair Market Value. No more manual spreadsheets or outdated estimates.</p>
+            </div>
+            <div class="col-md-5">
+              <img src="https://fairmarketvdev.wpenginepowered.com/wp-content/uploads/2023/04/Track-graph-Final.png" class="img-fluid rounded-3" alt="Graph" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bento-item bento-sm fade-up" style="transition-delay: 0.1s;">
+          <div class="bento-icon"><i class="bi bi-shield-lock"></i></div>
+          <h4>Independent & Private</h4>
+          <p class="text-muted">Unlike dealers, we don't sell coins. Your data is encrypted and strictly private. We are your unbiased single source of truth.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bento-item bento-sm fade-up" style="transition-delay: 0.2s;">
+          <div class="bento-icon"><i class="bi bi-bell"></i></div>
+          <h4>Smart Alerts</h4>
+          <p class="text-muted">Set profit goals and receive instant notifications when your holdings reach your targets.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bento-item bento-md fade-up" style="transition-delay: 0.3s;">
+          <div class="bento-icon"><i class="bi bi-bank"></i></div>
+          <h4>IRA & Compliance Support</h4>
+          <p class="text-muted">Generate professional reports suitable for IRA custodians and insurance documentation with one click.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bento-item bento-md fade-up" style="transition-delay: 0.4s;">
+          <div class="bento-icon"><i class="bi bi-stars"></i></div>
+          <h4>Numismatic Premium Tracking</h4>
+          <p class="text-muted">Track the historical performance of your collectible premiums over spot price, powered by PCGS/NGC data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===============================================
+       HOW IT WORKS
+  =============================================== -->
+  <section class="py-5" id="how" style="background:var(--fmv-white);">
+    <div class="container text-center py-5">
+      <div class="fade-up">
+        <h2 class="display-5 mb-5">Your Path to Clarity</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="mb-4">
+              <span class="d-inline-flex align-items-center justify-content-center bg-dark text-white rounded-circle fw-bold" style="width: 48px; height: 48px;">1</span>
+            </div>
+            <h4 class="h5 fw-bold">Link Your Portfolio</h4>
+            <p class="text-muted small">Import your collection via CSV, photo, or manual entry. We support PCGS, NGC, and raw coins.</p>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-4">
+              <span class="d-inline-flex align-items-center justify-content-center bg-dark text-white rounded-circle fw-bold" style="width: 48px; height: 48px;">2</span>
+            </div>
+            <h4 class="h5 fw-bold">Live Valuation</h4>
+            <p class="text-muted small">Our engine calculates real-time values based on spot price and historical numismatic premiums.</p>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-4">
+              <span class="d-inline-flex align-items-center justify-content-center bg-dark text-white rounded-circle fw-bold" style="width: 48px; height: 48px;">3</span>
+            </div>
+            <h4 class="h5 fw-bold">Protect & Grow</h4>
+            <p class="text-muted small">Monitor performance, set price alerts, and generate reports for IRA compliance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===============================================
+       ICONIC COINS GRID
+  =============================================== -->
+  <section id="coins" class="coin-grid-section">
+    <div class="container">
+      <div class="text-center mb-5 fade-up">
+        <h2 class="display-5">Tracked Iconic Coins</h2>
+        <p class="text-muted">Real-time valuation for the world's most sought-after mintages.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Coin 1 -->
+        <div class="col-6 col-md-4 col-lg-3 fade-up">
+          <div class="coin-card-premium">
+            <span class="value-preview">$2,450.20 Est.</span>
+            <img src="https://fairmarketvdev.wpenginepowered.com/wp-content/uploads/2023/07/2023-1-oz-american-gold-eagle-bu_258636_rev.jpeg" alt="Gold Eagle" class="coin-img-premium" />
+            <h5 class="h6 mb-1">American Gold Eagle</h5>
+            <div class="premium-tag">+5.2% Premium</div>
+          </div>
+        </div>
+        <!-- Coin 2 -->
+        <div class="col-6 col-md-4 col-lg-3 fade-up" style="transition-delay: 0.1s;">
+          <div class="coin-card-premium">
+            <span class="value-preview">$2,485.00 Est.</span>
+            <img src="https://fairmarketvdev.wpenginepowered.com/wp-content/uploads/2023/07/2023-1-oz-gold-buffalo-bu_260000_obv.jpeg" alt="Gold Buffalo" class="coin-img-premium" />
+            <h5 class="h6 mb-1">American Buffalo</h5>
+            <div class="premium-tag">+6.8% Premium</div>
+          </div>
+        </div>
+        <!-- Coin 3 -->
+        <div class="col-6 col-md-4 col-lg-3 fade-up" style="transition-delay: 0.2s;">
+          <div class="coin-card-premium">
+            <span class="value-preview">$2,410.50 Est.</span>
+            <img src="https://fairmarketvdev.wpenginepowered.com/wp-content/uploads/2023/08/2023-canada-1-oz-gold-maple-leaf-bu_258751_obv.jpeg" alt="Maple Leaf" class="coin-img-premium" />
+            <h5 class="h6 mb-1">Canadian Maple Leaf</h5>
+            <div class="premium-tag">+3.1% Premium</div>
+          </div>
+        </div>
+        <!-- Coin 4 -->
+        <div class="col-6 col-md-4 col-lg-3 fade-up" style="transition-delay: 0.3s;">
+          <div class="coin-card-premium">
+            <span class="value-preview">$2,390.00 Est.</span>
+            <img src="https://fairmarketvdev.wpenginepowered.com/wp-content/uploads/2022/08/gskq_main.jpeg" alt="Krugerrand" class="coin-img-premium" />
+            <h5 class="h6 mb-1">South African Krugerrand</h5>
+            <div class="premium-tag">+2.5% Premium</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5 fade-up">
+        <a href="#" class="btn btn-outline-dark px-5 py-3 rounded-pill fw-bold border-2">Browse All 1,200+ Coins</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===============================================
+       FAQ SECTION
+  =============================================== -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="row align-items-start g-5">
+        <div class="col-lg-5 fade-up">
+          <h2 class="display-5 mb-4">Common Questions</h2>
+          <p class="text-muted fs-5 mb-5">Everything you need to know about the platform and our valuation process.</p>
+          <div class="p-4 rounded-4" style="background:var(--fmv-platinum);">
+            <h5 class="h6 mb-3">Still have questions?</h5>
+            <p class="small text-muted mb-4">Our support team is available Mon-Fri to help you with your collection.</p>
+            <a href="#" class="btn btn-dark w-100 py-3 rounded-3">Contact Expert Support</a>
+          </div>
+        </div>
+        <div class="col-lg-7 fade-up" style="transition-delay: 0.2s;">
+          <div class="accordion faq-accordion" id="faqPremium">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#f1">
+                  How accurate are the daily valuations?
+                </button>
+              </h2>
+              <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faqPremium">
+                <div class="accordion-body">
+                  We combine real-time spot prices from global markets with verified dealer premiums and recent historical sales data for graded coins (PCGS/NGC).
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2">
+                  Can I track my IRA holdings here?
+                </button>
+              </h2>
+              <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqPremium">
+                <div class="accordion-body">
+                  Yes. FMV was built with IRA compliance in mind. You can generate professional inventory reports that meet the requirements of most major IRA custodians.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f3">
+                  Is my collection data shared with dealers?
+                </button>
+              </h2>
+              <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faqPremium">
+                <div class="accordion-body">
+                  Never. We are an independent software platform. We do not sell coins, and we do not sell your personal or collection data to third-party dealers.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===============================================
+       CTA FINAL
+  =============================================== -->
+  <section class="container my-5 fade-up">
+    <div class="p-5 p-lg-5 rounded-5 text-center position-relative overflow-hidden" style="background: var(--fmv-dark); color: #fff;">
+      <div style="position:relative; z-index:2;">
+        <h2 class="display-4 mb-4">Empower Your Wealth.</h2>
+        <p class="fs-5 mb-5 opacity-75 mx-auto" style="max-width: 650px;">Join 15,000+ collectors who trust Fair Market Value to track over $1.2B in precious metal assets.</p>
+        <a href="pricing.html" class="btn btn-gold px-5 py-3 fs-5">Get Started Free</a>
+      </div>
+      <!-- Background Glow -->
+      <div style="position:absolute; top:-100px; right:-100px; width:400px; height:400px; background: radial-gradient(circle, rgba(197,160,40,0.15) 0%, transparent 70%);"></div>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ===============================================
+     FOOTER
+=============================================== -->
+<footer class="footer-premium">
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <div class="col-lg-4">
+        <a class="navbar-brand-fmv mb-4 d-inline-block" href="#">
+          <div class="logo-container">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="logo-text">FMV<span>.GOLD</span></div>
+        </a>
+        <p class="text-muted pe-lg-5">The gold standard for precious metals portfolio management. Independent. Secure. Accurate.</p>
+        <div class="security-badge mt-4">
+          <i class="bi bi-shield-lock-fill fs-4 text-dark"></i>
+          <div>256-bit AES Encryption<br/><span class="small">Your data is yours alone.</span></div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5>Product</h5>
+        <a href="#" class="footer-link">Features</a>
+        <a href="pricing.html" class="footer-link">Pricing</a>
+        <a href="#how" class="footer-link">How It Works</a>
+        <a href="whats-my-coin-worth.html" class="footer-link">Valuations</a>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5>Company</h5>
+        <a href="#" class="footer-link">About Us</a>
+        <a href="#" class="footer-link">News</a>
+        <a href="#" class="footer-link">Contact</a>
+        <a href="#" class="footer-link">Support</a>
+      </div>
+      <div class="col-lg-4 footer-col">
+        <h5>Stay Informed</h5>
+        <p class="small text-muted mb-4">Receive market insights and regulatory updates directly in your inbox.</p>
+        <div class="input-group">
+          <input type="email" class="form-control border-end-0 py-3 bg-light" placeholder="Email address" style="border-radius: 12px 0 0 12px;" />
+          <button class="btn btn-gold px-4" style="border-radius: 0 12px 12px 0;">Join</button>
+        </div>
+      </div>
+    </div>
+    
+    <hr class="my-5 opacity-10" />
+    
+    <div class="row align-items-center">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <p class="small text-muted mb-0">© 2026 Fair Market Value. All Rights Reserved.</p>
+        <p class="small text-muted" style="font-size: 0.7rem; margin-top: 4px;">Not financial advice. Precious metals involve risk. Historical performance does not guarantee future results.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <div class="d-flex justify-content-md-end gap-4">
+          <a href="#" class="footer-link small mb-0">Privacy Policy</a>
+          <a href="#" class="footer-link small mb-0">Terms of Service</a>
+          <a href="#" class="footer-link small mb-0">Disclaimers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // --- Fade-up Animation Logic ---
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

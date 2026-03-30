@@ -7,9 +7,12 @@ from clients import KalshiHttpClient, KalshiWebSocketClient, Environment
 
 # Load environment variables
 load_dotenv()
-env = Environment.DEMO # toggle environment here
-KEYID = os.getenv('DEMO_KEYID') if env == Environment.DEMO else os.getenv('PROD_KEYID')
-KEYFILE = os.getenv('DEMO_KEYFILE') if env == Environment.DEMO else os.getenv('PROD_KEYFILE')
+env = Environment.PROD # toggle environment here
+#KEYID = os.getenv('DEMO_KEYID') if env == Environment.DEMO else os.getenv('PROD_KEYID')
+# KEYFILE = os.getenv('DEMO_KEYFILE') if env == Environment.DEMO else os.getenv('PROD_KEYFILE')
+
+KEYFILE = "W:\\Kalshi\\test.txt"
+KEYID = "81d279a5-d943-45e9-b8dc-24db7334600d"
 
 try:
     with open(KEYFILE, "rb") as key_file:

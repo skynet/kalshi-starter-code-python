@@ -24,7 +24,7 @@ class KalshiBaseClient:
         self,
         key_id: str,
         private_key: rsa.RSAPrivateKey,
-        environment: Environment = Environment.DEMO,
+        environment: Environment = Environment.PROD,
     ):
         """Initializes the client with the provided API key and private key.
 
@@ -205,7 +205,7 @@ class KalshiWebSocketClient(KalshiBaseClient):
             "id": self.message_id,
             "cmd": "subscribe",
             "params": {
-                "channels": ["ticker"]
+                "channels": ["market_positions"]
             }
         }
         await self.ws.send(json.dumps(subscription_message))
