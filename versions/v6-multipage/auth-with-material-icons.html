@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login / Register — FMV Gold</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Material Design Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <style>
+    :root {
+      --fmv-gold:       #C5A028;
+      --fmv-gold-dark:  #A68720;
+      --fmv-gold-light: rgba(197, 160, 40, 0.1);
+      --fmv-platinum:   #F2F3F4;
+      --fmv-dark:       #111827;
+      --fmv-text:       #4B5563;
+      --fmv-muted:      #9CA3AF;
+      --fmv-bg:         #FFFFFF;
+      --fmv-surface:    #F9FAFB;
+      --fmv-border:     #E5E7EB;
+      
+      --font-heading:   'Cinzel', serif;
+      --font-body:      'Plus Jakarta Sans', sans-serif;
+      
+      --radius-lg:      32px;
+      --radius-md:      24px;
+      --radius-sm:      16px;
+      --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
+      --shadow-gold:    0 10px 30px rgba(197, 160, 40, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: linear-gradient(135deg, var(--fmv-surface) 0%, #f5f3f0 100%);
+      color: var(--fmv-text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--fmv-dark);
+      font-weight: 700;
+    }
+
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      background: var(--fmv-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-premium);
+      border: 1px solid var(--fmv-border);
+      max-width: 450px;
+      width: 100%;
+      padding: 3rem 2.5rem;
+      animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .logo-icon .material-icons {
+      color: white;
+      font-size: 28px;
+    }
+
+    .auth-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-header p {
+      color: var(--fmv-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Toggle Buttons */
+    .auth-toggle {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 2rem;
+      background: var(--fmv-surface);
+      padding: 6px;
+      border-radius: 12px;
+    }
+
+    .auth-toggle-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      color: var(--fmv-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .auth-toggle-btn.active {
+      background: var(--fmv-bg);
+      color: var(--fmv-gold);
+      box-shadow: 0 2px 8px rgba(197, 160, 40, 0.15);
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 1.3rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: var(--fmv-dark);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-label .material-icons {
+      font-size: 18px;
+      color: var(--fmv-gold);
+    }
+
+    .form-control {
+      border: 1.5px solid var(--fmv-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      transition: all 0.3s ease;
+      background: var(--fmv-bg);
+    }
+
+    .form-control:focus {
+      border-color: var(--fmv-gold);
+      box-shadow: 0 0 0 3px var(--fmv-gold-light);
+      color: var(--fmv-dark);
+    }
+
+    .form-control::placeholder {
+      color: var(--fmv-muted);
+    }
+
+    /* Password Strength Indicator */
+    .password-strength {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .strength-bar {
+      height: 4px;
+      background: var(--fmv-border);
+      border-radius: 2px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .strength-text {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .strength-fill.weak {
+      background: #EF4444;
+      width: 33%;
+    }
+
+    .strength-text.weak {
+      color: #EF4444;
+    }
+
+    .strength-fill.medium {
+      background: #FBBF24;
+      width: 66%;
+    }
+
+    .strength-text.medium {
+      color: #FBBF24;
+    }
+
+    .strength-fill.strong {
+      background: #10B981;
+      width: 100%;
+    }
+
+    .strength-text.strong {
+      color: #10B981;
+    }
+
+    /* Checkbox & Remember Me */
+    .form-check {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-check-input {
+      border: 1.5px solid var(--fmv-border);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .form-check-input:checked {
+      background-color: var(--fmv-gold);
+      border-color: var(--fmv-gold);
+    }
+
+    .form-check-input:focus {
+      border-color: var(--fmv-gold);
+      box-shadow: 0 0 0 0.25rem var(--fmv-gold-light);
+    }
+
+    .form-check-label {
+      color: var(--fmv-text);
+      font-weight: 500;
+      cursor: pointer;
+      margin-left: 0.5rem;
+    }
+
+    /* Helper Text */
+    .form-text {
+      color: var(--fmv-muted);
+      font-size: 0.85rem;
+      margin-top: 0.4rem;
+    }
+
+    .form-text.error {
+      color: #EF4444;
+    }
+
+    /* Buttons */
+    .btn-auth {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .btn-auth-primary {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark);
+      margin-bottom: 1rem;
+    }
+
+    .btn-auth-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .btn-auth-secondary {
+      background: var(--fmv-surface);
+      color: var(--fmv-dark);
+      border: 1.5px solid var(--fmv-border);
+    }
+
+    .btn-auth-secondary:hover {
+      border-color: var(--fmv-gold);
+      color: var(--fmv-gold);
+    }
+
+    .btn-auth .material-icons {
+      font-size: 20px;
+    }
+
+    /* Links */
+    .auth-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .auth-links a {
+      color: var(--fmv-gold);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .auth-links a:hover {
+      color: var(--fmv-gold-dark);
+      text-decoration: underline;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      color: var(--fmv-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--fmv-border);
+    }
+
+    /* Social Login */
+    .social-login {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .social-btn {
+      padding: 10px;
+      border: 1.5px solid var(--fmv-border);
+      border-radius: 12px;
+      background: var(--fmv-bg);
+      color: var(--fmv-dark);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+    .social-btn:hover {
+      border-color: var(--fmv-gold);
+      color: var(--fmv-gold);
+      box-shadow: 0 4px 12px rgba(197, 160, 40, 0.1);
+    }
+
+    .social-btn .material-icons {
+      font-size: 20px;
+    }
+
+    /* Footer Text */
+    .auth-footer {
+      text-align: center;
+      color: var(--fmv-muted);
+      font-size: 0.9rem;
+    }
+
+    .auth-footer a {
+      color: var(--fmv-gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hidden Form */
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 576px) {
+      .auth-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .auth-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .social-login {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="auth-container">
+  <div class="auth-card">
+    
+    <!-- Header -->
+    <div class="auth-header">
+      <div class="logo-icon">
+        <span class="material-icons">shield</span>
+      </div>
+      <h1>FMV Gold</h1>
+      <p>Premium Precious Metals Portfolio</p>
+    </div>
+
+    <!-- Toggle Buttons -->
+    <div class="auth-toggle">
+      <button class="auth-toggle-btn active" data-form="login">Login</button>
+      <button class="auth-toggle-btn" data-form="register">Register</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form class="form-section active" id="loginForm">
+      
+      <div class="form-group">
+        <label class="form-label">
+          <span class="material-icons">email</span>
+          Email Address
+        </label>
+        <input type="email" class="form-control" placeholder="john@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <span class="material-icons">lock</span>
+          Password
+        </label>
+        <input type="password" class="form-control" placeholder="••••••••" required>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="rememberMe">
+        <label class="form-check-label" for="rememberMe">
+          Remember me for 30 days
+        </label>
+      </div>
+
+      <div class="auth-links">
+        <span></span>
+        <a href="#">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="btn-auth btn-auth-primary">
+        <span class="material-icons">login</span>
+        Sign In
+      </button>
+
+      <div class="divider">Or continue with</div>
+
+      <div class="social-login">
+        <button type="button" class="social-btn">
+          <span class="material-icons">g_translate</span>
+          Google
+        </button>
+        <button type="button" class="social-btn">
+          <span class="material-icons">apple</span>
+          Apple
+        </button>
+      </div>
+
+      <p class="auth-footer">
+        Don't have an account? <a href="#" class="toggle-form" data-form="register">Create one</a>
+      </p>
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form class="form-section" id="registerForm">
+      
+      <div class="form-group">
+        <label class="form-label">
+          <span class="material-icons">person</span>
+          Full Name
+        </label>
+        <input type="text" class="form-control" placeholder="John Doe" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <span class="material-icons">email</span>
+          Email Address
+        </label>
+        <input type="email" class="form-control" placeholder="john@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <span class="material-icons">lock</span>
+          Password
+        </label>
+        <input type="password" class="form-control password-input" placeholder="••••••••" required>
+        
+        <div class="password-strength">
+          <div class="strength-bar">
+            <div class="strength-fill"></div>
+          </div>
+          <span class="strength-text"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <span class="material-icons">lock</span>
+          Confirm Password
+        </label>
+        <input type="password" class="form-control" placeholder="••••••••" required>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+        <label class="form-check-label" for="agreeTerms">
+          I agree to the <a href="#" style="color: var(--fmv-gold);">Terms & Conditions</a>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-auth btn-auth-primary">
+        <span class="material-icons">app_registration</span>
+        Create Account
+      </button>
+
+      <div class="divider">Or sign up with</div>
+
+      <div class="social-login">
+        <button type="button" class="social-btn">
+          <span class="material-icons">g_translate</span>
+          Google
+        </button>
+        <button type="button" class="social-btn">
+          <span class="material-icons">apple</span>
+          Apple
+        </button>
+      </div>
+
+      <p class="auth-footer">
+        Already have an account? <a href="#" class="toggle-form" data-form="login">Sign in</a>
+      </p>
+    </form>
+
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Form Toggle
+  document.querySelectorAll('[data-form]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const formType = this.getAttribute('data-form');
+      
+      // Update active button
+      document.querySelectorAll('.auth-toggle-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Update active form
+      document.querySelectorAll('.form-section').forEach(f => f.classList.remove('active'));
+      document.getElementById(formType + 'Form').classList.add('active');
+    });
+  });
+
+  // Toggle Form via Links
+  document.querySelectorAll('.toggle-form').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const formType = this.getAttribute('data-form');
+      document.querySelector(`[data-form="${formType}"]`).click();
+    });
+  });
+
+  // Password Strength Indicator
+  document.querySelector('.password-input')?.addEventListener('input', function() {
+    const password = this.value;
+    const strengthBar = this.parentElement.querySelector('.strength-fill');
+    const strengthText = this.parentElement.querySelector('.strength-text');
+    
+    let strength = 'weak';
+    if (password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+      strength = 'strong';
+    } else if (password.length >= 6) {
+      strength = 'medium';
+    }
+    
+    // Update classes
+    strengthBar.className = 'strength-fill ' + strength;
+    strengthText.className = 'strength-text ' + strength;
+    strengthText.textContent = strength;
+  });
+
+  // Form Submission
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Form submitted! (This is a demo)');
+    });
+  });
+
+  // Social Button Click
+  document.querySelectorAll('.social-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Social login not implemented in demo');
+    });
+  });
+</script>
+
+</body>
+</html>

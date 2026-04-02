@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Material Design Icons Demo — FMV Gold</title>
+
+  <!-- Google Fonts: Cinzel + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Material Design Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <style>
+    :root {
+      --fmv-gold:       #C5A028;
+      --fmv-gold-dark:  #A68720;
+      --fmv-gold-light: rgba(197, 160, 40, 0.1);
+      --fmv-platinum:   #F2F3F4;
+      --fmv-dark:       #111827;
+      --fmv-text:       #4B5563;
+      --fmv-muted:      #9CA3AF;
+      --fmv-bg:         #FFFFFF;
+      --fmv-surface:    #F9FAFB;
+      --fmv-border:     #E5E7EB;
+      
+      --font-heading:   'Cinzel', serif;
+      --font-body:      'Plus Jakarta Sans', sans-serif;
+      
+      --radius-lg:      32px;
+      --radius-md:      24px;
+      --radius-sm:      16px;
+      --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
+      --shadow-gold:    0 10px 30px rgba(197, 160, 40, 0.15);
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--fmv-bg);
+      color: var(--fmv-text);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--fmv-dark);
+      font-weight: 700;
+    }
+
+    .navbar-fmv {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--fmv-border);
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand-fmv {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-container {
+      width: 40px;
+      height: 40px;
+      background: var(--fmv-gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .logo-text {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--fmv-dark);
+      letter-spacing: 0.05em;
+    }
+
+    .logo-text span {
+      color: var(--fmv-gold);
+      font-weight: 400;
+    }
+
+    .nav-link-fmv {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--fmv-dark) !important;
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+
+    .nav-link-fmv:hover {
+      color: var(--fmv-gold) !important;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark) !important;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .btn-gold:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(197, 160, 40, 0.25);
+    }
+
+    .hero-section {
+      padding: 80px 0 60px;
+      background: radial-gradient(circle at 80% 20%, var(--fmv-gold-light) 0%, transparent 40%);
+    }
+
+    .hero-headline {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subhead {
+      font-size: 1.1rem;
+      max-width: 580px;
+      margin-bottom: 2rem;
+      color: var(--fmv-text);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin: 3rem 0 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--fmv-gold);
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+      background: var(--fmv-surface);
+      border: 1px solid var(--fmv-border);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .icon-item:hover {
+      transform: translateY(-8px);
+      border-color: var(--fmv-gold);
+      box-shadow: var(--shadow-premium);
+      background: var(--fmv-bg);
+    }
+
+    .material-icon-display {
+      font-size: 2.5rem;
+      color: var(--fmv-gold);
+      margin-bottom: 0.8rem;
+      font-weight: normal;
+    }
+
+    .icon-name {
+      font-size: 0.85rem;
+      color: var(--fmv-muted);
+      font-family: 'Courier New', monospace;
+      word-break: break-all;
+      font-weight: 600;
+    }
+
+    .icon-category {
+      background: var(--fmv-surface);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+    }
+
+    .search-box {
+      margin: 2rem 0;
+      position: sticky;
+      top: 100px;
+      z-index: 100;
+    }
+
+    .search-input {
+      padding: 12px 20px;
+      border: 2px solid var(--fmv-border);
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--fmv-gold);
+      box-shadow: 0 0 0 3px var(--fmv-gold-light);
+    }
+
+    .usage-section {
+      background: #f5f5f5;
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      margin: 3rem 0;
+    }
+
+    .code-block {
+      background: #222;
+      color: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .footer-premium {
+      background: var(--fmv-bg);
+      border-top: 1px solid var(--fmv-border);
+      padding: 40px 0 20px;
+      margin-top: 3rem;
+    }
+
+    .footer-link {
+      display: block;
+      color: var(--fmv-text);
+      text-decoration: none;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--fmv-gold);
+    }
+
+    @media (max-width: 768px) {
+      .icon-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 1rem;
+      }
+
+      .search-box {
+        position: static;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-fmv sticky-top">
+  <div class="container">
+    <a class="navbar-brand-fmv" href="index.html">
+      <div class="logo-container">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">FMV<span>.GOLD</span></div>
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="material-icons">menu</span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="features.html">Features</a></li>
+        <li class="nav-item ms-lg-2"><a href="index.html" class="btn btn-gold px-4">Back Home</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="container">
+    <h1 class="hero-headline">Material Design Icons <span style="color:var(--fmv-gold)">Showcase</span></h1>
+    <p class="hero-subhead">Browse and reference all Material Design Icons available from Google Fonts. Click any icon to see its HTML code.</p>
+  </div>
+</section>
+
+<main class="container py-5">
+
+  <!-- SEARCH BOX -->
+  <div class="search-box">
+    <input 
+      type="text" 
+      class="search-input w-100" 
+      id="iconSearch" 
+      placeholder="🔍 Search icons (e.g., wallet, trending, chart)..."
+    />
+  </div>
+
+  <!-- USAGE GUIDE -->
+  <section class="usage-section">
+    <h2 class="h4 mb-3">How to Use Material Design Icons</h2>
+    
+    <p><strong>Step 1: Add the CDN link to your &lt;head&gt;</strong></p>
+    <div class="code-block">
+&lt;link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"&gt;
+    </div>
+
+    <p><strong>Step 2: Use icons in your HTML</strong></p>
+    <div class="code-block">
+&lt;span class="material-icons"&gt;wallet&lt;/span&gt;
+&lt;span class="material-icons"&gt;trending_up&lt;/span&gt;
+&lt;span class="material-icons"&gt;bar_chart&lt;/span&gt;
+    </div>
+
+    <p><strong>Step 3: Style with CSS</strong></p>
+    <div class="code-block">
+.material-icons {
+  color: #C5A028;  /* Your gold color */
+  font-size: 24px;
+}
+    </div>
+  </section>
+
+  <!-- FINANCIAL & BUSINESS -->
+  <section class="icon-category">
+    <h2 class="section-title">💰 Financial & Business</h2>
+    <div class="icon-grid" data-category="financial">
+      <div class="icon-item" data-icon="wallet">
+        <span class="material-icons material-icon-display">wallet</span>
+        <span class="icon-name">wallet</span>
+      </div>
+      <div class="icon-item" data-icon="attach_money">
+        <span class="material-icons material-icon-display">attach_money</span>
+        <span class="icon-name">attach_money</span>
+      </div>
+      <div class="icon-item" data-icon="currency_exchange">
+        <span class="material-icons material-icon-display">currency_exchange</span>
+        <span class="icon-name">currency_exchange</span>
+      </div>
+      <div class="icon-item" data-icon="credit_card">
+        <span class="material-icons material-icon-display">credit_card</span>
+        <span class="icon-name">credit_card</span>
+      </div>
+      <div class="icon-item" data-icon="savings">
+        <span class="material-icons material-icon-display">savings</span>
+        <span class="icon-name">savings</span>
+      </div>
+      <div class="icon-item" data-icon="account_balance">
+        <span class="material-icons material-icon-display">account_balance</span>
+        <span class="icon-name">account_balance</span>
+      </div>
+      <div class="icon-item" data-icon="payment">
+        <span class="material-icons material-icon-display">payment</span>
+        <span class="icon-name">payment</span>
+      </div>
+      <div class="icon-item" data-icon="price_check">
+        <span class="material-icons material-icon-display">price_check</span>
+        <span class="icon-name">price_check</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHARTS & ANALYTICS -->
+  <section class="icon-category">
+    <h2 class="section-title">📊 Charts & Analytics</h2>
+    <div class="icon-grid" data-category="charts">
+      <div class="icon-item" data-icon="bar_chart">
+        <span class="material-icons material-icon-display">bar_chart</span>
+        <span class="icon-name">bar_chart</span>
+      </div>
+      <div class="icon-item" data-icon="pie_chart">
+        <span class="material-icons material-icon-display">pie_chart</span>
+        <span class="icon-name">pie_chart</span>
+      </div>
+      <div class="icon-item" data-icon="trending_up">
+        <span class="material-icons material-icon-display">trending_up</span>
+        <span class="icon-name">trending_up</span>
+      </div>
+      <div class="icon-item" data-icon="trending_down">
+        <span class="material-icons material-icon-display">trending_down</span>
+        <span class="icon-name">trending_down</span>
+      </div>
+      <div class="icon-item" data-icon="analytics">
+        <span class="material-icons material-icon-display">analytics</span>
+        <span class="icon-name">analytics</span>
+      </div>
+      <div class="icon-item" data-icon="show_chart">
+        <span class="material-icons material-icon-display">show_chart</span>
+        <span class="icon-name">show_chart</span>
+      </div>
+      <div class="icon-item" data-icon="assessment">
+        <span class="material-icons material-icon-display">assessment</span>
+        <span class="icon-name">assessment</span>
+      </div>
+      <div class="icon-item" data-icon="candlestick_chart">
+        <span class="material-icons material-icon-display">candlestick_chart</span>
+        <span class="icon-name">candlestick_chart</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARROWS & DIRECTIONS -->
+  <section class="icon-category">
+    <h2 class="section-title">➡️ Arrows & Directions</h2>
+    <div class="icon-grid" data-category="arrows">
+      <div class="icon-item" data-icon="arrow_upward">
+        <span class="material-icons material-icon-display">arrow_upward</span>
+        <span class="icon-name">arrow_upward</span>
+      </div>
+      <div class="icon-item" data-icon="arrow_downward">
+        <span class="material-icons material-icon-display">arrow_downward</span>
+        <span class="icon-name">arrow_downward</span>
+      </div>
+      <div class="icon-item" data-icon="arrow_forward">
+        <span class="material-icons material-icon-display">arrow_forward</span>
+        <span class="icon-name">arrow_forward</span>
+      </div>
+      <div class="icon-item" data-icon="arrow_back">
+        <span class="material-icons material-icon-display">arrow_back</span>
+        <span class="icon-name">arrow_back</span>
+      </div>
+      <div class="icon-item" data-icon="expand_more">
+        <span class="material-icons material-icon-display">expand_more</span>
+        <span class="icon-name">expand_more</span>
+      </div>
+      <div class="icon-item" data-icon="expand_less">
+        <span class="material-icons material-icon-display">expand_less</span>
+        <span class="icon-name">expand_less</span>
+      </div>
+      <div class="icon-item" data-icon="swap_horiz">
+        <span class="material-icons material-icon-display">swap_horiz</span>
+        <span class="icon-name">swap_horiz</span>
+      </div>
+      <div class="icon-item" data-icon="sync">
+        <span class="material-icons material-icon-display">sync</span>
+        <span class="icon-name">sync</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOPPING & COMMERCE -->
+  <section class="icon-category">
+    <h2 class="section-title">🛒 Shopping & Commerce</h2>
+    <div class="icon-grid" data-category="shopping">
+      <div class="icon-item" data-icon="shopping_cart">
+        <span class="material-icons material-icon-display">shopping_cart</span>
+        <span class="icon-name">shopping_cart</span>
+      </div>
+      <div class="icon-item" data-icon="shopping_bag">
+        <span class="material-icons material-icon-display">shopping_bag</span>
+        <span class="icon-name">shopping_bag</span>
+      </div>
+      <div class="icon-item" data-icon="store">
+        <span class="material-icons material-icon-display">store</span>
+        <span class="icon-name">store</span>
+      </div>
+      <div class="icon-item" data-icon="local_shipping">
+        <span class="material-icons material-icon-display">local_shipping</span>
+        <span class="icon-name">local_shipping</span>
+      </div>
+      <div class="icon-item" data-icon="inventory_2">
+        <span class="material-icons material-icon-display">inventory_2</span>
+        <span class="icon-name">inventory_2</span>
+      </div>
+      <div class="icon-item" data-icon="sell">
+        <span class="material-icons material-icon-display">sell</span>
+        <span class="icon-name">sell</span>
+      </div>
+      <div class="icon-item" data-icon="discount">
+        <span class="material-icons material-icon-display">discount</span>
+        <span class="icon-name">discount</span>
+      </div>
+      <div class="icon-item" data-icon="receipt_long">
+        <span class="material-icons material-icon-display">receipt_long</span>
+        <span class="icon-name">receipt_long</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- USER & ACCOUNT -->
+  <section class="icon-category">
+    <h2 class="section-title">👤 User & Account</h2>
+    <div class="icon-grid" data-category="user">
+      <div class="icon-item" data-icon="account_circle">
+        <span class="material-icons material-icon-display">account_circle</span>
+        <span class="icon-name">account_circle</span>
+      </div>
+      <div class="icon-item" data-icon="person">
+        <span class="material-icons material-icon-display">person</span>
+        <span class="icon-name">person</span>
+      </div>
+      <div class="icon-item" data-icon="people">
+        <span class="material-icons material-icon-display">people</span>
+        <span class="icon-name">people</span>
+      </div>
+      <div class="icon-item" data-icon="person_add">
+        <span class="material-icons material-icon-display">person_add</span>
+        <span class="icon-name">person_add</span>
+      </div>
+      <div class="icon-item" data-icon="login">
+        <span class="material-icons material-icon-display">login</span>
+        <span class="icon-name">login</span>
+      </div>
+      <div class="icon-item" data-icon="logout">
+        <span class="material-icons material-icon-display">logout</span>
+        <span class="icon-name">logout</span>
+      </div>
+      <div class="icon-item" data-icon="verified_user">
+        <span class="material-icons material-icon-display">verified_user</span>
+        <span class="icon-name">verified_user</span>
+      </div>
+      <div class="icon-item" data-icon="security">
+        <span class="material-icons material-icon-display">security</span>
+        <span class="icon-name">security</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTIFICATIONS & STATUS -->
+  <section class="icon-category">
+    <h2 class="section-title">🔔 Notifications & Status</h2>
+    <div class="icon-grid" data-category="notifications">
+      <div class="icon-item" data-icon="notifications">
+        <span class="material-icons material-icon-display">notifications</span>
+        <span class="icon-name">notifications</span>
+      </div>
+      <div class="icon-item" data-icon="notifications_active">
+        <span class="material-icons material-icon-display">notifications_active</span>
+        <span class="icon-name">notifications_active</span>
+      </div>
+      <div class="icon-item" data-icon="check_circle">
+        <span class="material-icons material-icon-display">check_circle</span>
+        <span class="icon-name">check_circle</span>
+      </div>
+      <div class="icon-item" data-icon="error">
+        <span class="material-icons material-icon-display">error</span>
+        <span class="icon-name">error</span>
+      </div>
+      <div class="icon-item" data-icon="warning">
+        <span class="material-icons material-icon-display">warning</span>
+        <span class="icon-name">warning</span>
+      </div>
+      <div class="icon-item" data-icon="info">
+        <span class="material-icons material-icon-display">info</span>
+        <span class="icon-name">info</span>
+      </div>
+      <div class="icon-item" data-icon="done">
+        <span class="material-icons material-icon-display">done</span>
+        <span class="icon-name">done</span>
+      </div>
+      <div class="icon-item" data-icon="close">
+        <span class="material-icons material-icon-display">close</span>
+        <span class="icon-name">close</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAVIGATION -->
+  <section class="icon-category">
+    <h2 class="section-title">🗺️ Navigation</h2>
+    <div class="icon-grid" data-category="navigation">
+      <div class="icon-item" data-icon="home">
+        <span class="material-icons material-icon-display">home</span>
+        <span class="icon-name">home</span>
+      </div>
+      <div class="icon-item" data-icon="menu">
+        <span class="material-icons material-icon-display">menu</span>
+        <span class="icon-name">menu</span>
+      </div>
+      <div class="icon-item" data-icon="more_vert">
+        <span class="material-icons material-icon-display">more_vert</span>
+        <span class="icon-name">more_vert</span>
+      </div>
+      <div class="icon-item" data-icon="settings">
+        <span class="material-icons material-icon-display">settings</span>
+        <span class="icon-name">settings</span>
+      </div>
+      <div class="icon-item" data-icon="dashboard">
+        <span class="material-icons material-icon-display">dashboard</span>
+        <span class="icon-name">dashboard</span>
+      </div>
+      <div class="icon-item" data-icon="help">
+        <span class="material-icons material-icon-display">help</span>
+        <span class="icon-name">help</span>
+      </div>
+      <div class="icon-item" data-icon="search">
+        <span class="material-icons material-icon-display">search</span>
+        <span class="icon-name">search</span>
+      </div>
+      <div class="icon-item" data-icon="favorite">
+        <span class="material-icons material-icon-display">favorite</span>
+        <span class="icon-name">favorite</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCUMENTS & FILES -->
+  <section class="icon-category">
+    <h2 class="section-title">📄 Documents & Files</h2>
+    <div class="icon-grid" data-category="documents">
+      <div class="icon-item" data-icon="description">
+        <span class="material-icons material-icon-display">description</span>
+        <span class="icon-name">description</span>
+      </div>
+      <div class="icon-item" data-icon="file_download">
+        <span class="material-icons material-icon-display">file_download</span>
+        <span class="icon-name">file_download</span>
+      </div>
+      <div class="icon-item" data-icon="file_upload">
+        <span class="material-icons material-icon-display">file_upload</span>
+        <span class="icon-name">file_upload</span>
+      </div>
+      <div class="icon-item" data-icon="folder">
+        <span class="material-icons material-icon-display">folder</span>
+        <span class="icon-name">folder</span>
+      </div>
+      <div class="icon-item" data-icon="folder_open">
+        <span class="material-icons material-icon-display">folder_open</span>
+        <span class="icon-name">folder_open</span>
+      </div>
+      <div class="icon-item" data-icon="content_copy">
+        <span class="material-icons material-icon-display">content_copy</span>
+        <span class="icon-name">content_copy</span>
+      </div>
+      <div class="icon-item" data-icon="print">
+        <span class="material-icons material-icon-display">print</span>
+        <span class="icon-name">print</span>
+      </div>
+      <div class="icon-item" data-icon="save">
+        <span class="material-icons material-icon-display">save</span>
+        <span class="icon-name">save</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNICATION -->
+  <section class="icon-category">
+    <h2 class="section-title">💬 Communication</h2>
+    <div class="icon-grid" data-category="communication">
+      <div class="icon-item" data-icon="mail">
+        <span class="material-icons material-icon-display">mail</span>
+        <span class="icon-name">mail</span>
+      </div>
+      <div class="icon-item" data-icon="email">
+        <span class="material-icons material-icon-display">email</span>
+        <span class="icon-name">email</span>
+      </div>
+      <div class="icon-item" data-icon="phone">
+        <span class="material-icons material-icon-display">phone</span>
+        <span class="icon-name">phone</span>
+      </div>
+      <div class="icon-item" data-icon="chat">
+        <span class="material-icons material-icon-display">chat</span>
+        <span class="icon-name">chat</span>
+      </div>
+      <div class="icon-item" data-icon="message">
+        <span class="material-icons material-icon-display">message</span>
+        <span class="icon-name">message</span>
+      </div>
+      <div class="icon-item" data-icon="comment">
+        <span class="material-icons material-icon-display">comment</span>
+        <span class="icon-name">comment</span>
+      </div>
+      <div class="icon-item" data-icon="feedback">
+        <span class="material-icons material-icon-display">feedback</span>
+        <span class="icon-name">feedback</span>
+      </div>
+      <div class="icon-item" data-icon="forum">
+        <span class="material-icons material-icon-display">forum</span>
+        <span class="icon-name">forum</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIME & CALENDAR -->
+  <section class="icon-category">
+    <h2 class="section-title">📅 Time & Calendar</h2>
+    <div class="icon-grid" data-category="time">
+      <div class="icon-item" data-icon="calendar_today">
+        <span class="material-icons material-icon-display">calendar_today</span>
+        <span class="icon-name">calendar_today</span>
+      </div>
+      <div class="icon-item" data-icon="calendar_month">
+        <span class="material-icons material-icon-display">calendar_month</span>
+        <span class="icon-name">calendar_month</span>
+      </div>
+      <div class="icon-item" data-icon="access_time">
+        <span class="material-icons material-icon-display">access_time</span>
+        <span class="icon-name">access_time</span>
+      </div>
+      <div class="icon-item" data-icon="schedule">
+        <span class="material-icons material-icon-display">schedule</span>
+        <span class="icon-name">schedule</span>
+      </div>
+      <div class="icon-item" data-icon="history">
+        <span class="material-icons material-icon-display">history</span>
+        <span class="icon-name">history</span>
+      </div>
+      <div class="icon-item" data-icon="today">
+        <span class="material-icons material-icon-display">today</span>
+        <span class="icon-name">today</span>
+      </div>
+      <div class="icon-item" data-icon="event">
+        <span class="material-icons material-icon-display">event</span>
+        <span class="icon-name">event</span>
+      </div>
+      <div class="icon-item" data-icon="timer">
+        <span class="material-icons material-icon-display">timer</span>
+        <span class="icon-name">timer</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEDIA & CONTENT -->
+  <section class="icon-category">
+    <h2 class="section-title">🎬 Media & Content</h2>
+    <div class="icon-grid" data-category="media">
+      <div class="icon-item" data-icon="image">
+        <span class="material-icons material-icon-display">image</span>
+        <span class="icon-name">image</span>
+      </div>
+      <div class="icon-item" data-icon="photo_camera">
+        <span class="material-icons material-icon-display">photo_camera</span>
+        <span class="icon-name">photo_camera</span>
+      </div>
+      <div class="icon-item" data-icon="videocam">
+        <span class="material-icons material-icon-display">videocam</span>
+        <span class="icon-name">videocam</span>
+      </div>
+      <div class="icon-item" data-icon="play_circle">
+        <span class="material-icons material-icon-display">play_circle</span>
+        <span class="icon-name">play_circle</span>
+      </div>
+      <div class="icon-item" data-icon="pause_circle">
+        <span class="material-icons material-icon-display">pause_circle</span>
+        <span class="icon-name">pause_circle</span>
+      </div>
+      <div class="icon-item" data-icon="stop_circle">
+        <span class="material-icons material-icon-display">stop_circle</span>
+        <span class="icon-name">stop_circle</span>
+      </div>
+      <div class="icon-item" data-icon="volume_up">
+        <span class="material-icons material-icon-display">volume_up</span>
+        <span class="icon-name">volume_up</span>
+      </div>
+      <div class="icon-item" data-icon="volume_mute">
+        <span class="material-icons material-icon-display">volume_mute</span>
+        <span class="icon-name">volume_mute</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISCELLANEOUS -->
+  <section class="icon-category">
+    <h2 class="section-title">⭐ Miscellaneous</h2>
+    <div class="icon-grid" data-category="misc">
+      <div class="icon-item" data-icon="star">
+        <span class="material-icons material-icon-display">star</span>
+        <span class="icon-name">star</span>
+      </div>
+      <div class="icon-item" data-icon="star_half">
+        <span class="material-icons material-icon-display">star_half</span>
+        <span class="icon-name">star_half</span>
+      </div>
+      <div class="icon-item" data-icon="star_border">
+        <span class="material-icons material-icon-display">star_border</span>
+        <span class="icon-name">star_border</span>
+      </div>
+      <div class="icon-item" data-icon="thumb_up">
+        <span class="material-icons material-icon-display">thumb_up</span>
+        <span class="icon-name">thumb_up</span>
+      </div>
+      <div class="icon-item" data-icon="thumb_down">
+        <span class="material-icons material-icon-display">thumb_down</span>
+        <span class="icon-name">thumb_down</span>
+      </div>
+      <div class="icon-item" data-icon="flag">
+        <span class="material-icons material-icon-display">flag</span>
+        <span class="icon-name">flag</span>
+      </div>
+      <div class="icon-item" data-icon="bookmark">
+        <span class="material-icons material-icon-display">bookmark</span>
+        <span class="icon-name">bookmark</span>
+      </div>
+      <div class="icon-item" data-icon="link">
+        <span class="material-icons material-icon-display">link</span>
+        <span class="icon-name">link</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer-premium">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-6">
+        <h5 class="text-muted small text-uppercase mb-3">Material Design Icons</h5>
+        <p class="text-muted small">All icons provided by <a href="https://fonts.google.com/icons" target="_blank" class="footer-link">Google Fonts</a></p>
+      </div>
+      <div class="col-lg-6 text-md-end">
+        <a href="index.html" class="footer-link small mb-0">Back to Home</a>
+      </div>
+    </div>
+    <hr class="my-3 opacity-10" />
+    <p class="small text-muted mb-0">© 2026 Fair Market Value. Material Design Icons are licensed under Apache 2.0.</p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Copy icon code to clipboard on click
+  document.querySelectorAll('.icon-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const iconName = this.getAttribute('data-icon');
+      const code = `<span class="material-icons">${iconName}</span>`;
+      
+      navigator.clipboard.writeText(code);
+      
+      // Visual feedback
+      const originalText = this.querySelector('.icon-name').textContent;
+      this.querySelector('.icon-name').textContent = 'Copied!';
+      this.style.background = 'var(--fmv-gold-light)';
+      
+      setTimeout(() => {
+        this.querySelector('.icon-name').textContent = originalText;
+        this.style.background = 'var(--fmv-surface)';
+      }, 1500);
+    });
+  });
+
+  // Search functionality
+  document.getElementById('iconSearch').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    
+    document.querySelectorAll('.icon-item').forEach(item => {
+      const iconName = item.getAttribute('data-icon').toLowerCase();
+      
+      if (searchTerm === '' || iconName.includes(searchTerm)) {
+        item.style.display = 'flex';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Dashboard — Fair Market Value</title>
+
+  <!-- Google Fonts: Cinzel + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+
+  <style>
+    :root {
+      --fmv-gold:       #C5A028;
+      --fmv-gold-dark:  #A68720;
+      --fmv-gold-light: rgba(197, 160, 40, 0.1);
+      --fmv-gold-glow:  rgba(197, 160, 40, 0.03);
+      --fmv-platinum:   #F2F3F4;
+      --fmv-dark:       #111827;
+      --fmv-text:       #4B5563;
+      --fmv-muted:      #9CA3AF;
+      --fmv-bg:         #FFFFFF;
+      --fmv-surface:    #F9FAFB;
+      --fmv-border:     #E5E7EB;
+      
+      --font-heading:   'Cinzel', serif;
+      --font-body:      'Plus Jakarta Sans', sans-serif;
+      
+      --radius-lg:      32px;
+      --radius-md:      24px;
+      --radius-sm:      16px;
+      --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
+      --shadow-gold:    0 10px 30px rgba(197, 160, 40, 0.15);
+      
+      --glass-bg:       rgba(255, 255, 255, 0.7);
+      --glass-border:   rgba(197, 160, 40, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--fmv-surface);
+      color: var(--fmv-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--fmv-dark);
+      font-weight: 700;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar-fmv {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--fmv-border);
+      padding: 1rem 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .navbar-brand-fmv {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-container {
+      width: 40px;
+      height: 40px;
+      background: var(--fmv-gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .logo-text {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--fmv-dark);
+      letter-spacing: 0.05em;
+    }
+
+    .logo-text span {
+      color: var(--fmv-gold);
+      font-weight: 400;
+    }
+
+    .nav-link-fmv {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--fmv-dark) !important;
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+
+    .nav-link-fmv:hover { color: var(--fmv-gold) !important; }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark) !important;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-gold);
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .btn-gold:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(197, 160, 40, 0.25);
+      color: var(--fmv-dark) !important;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 12px;
+      transition: background 0.2s;
+    }
+
+    .user-profile:hover {
+      background: var(--fmv-gold-light);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fmv-dark);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* ========== SIDEBAR ========== */
+    .sidebar {
+      background: var(--fmv-bg);
+      border-right: 1px solid var(--fmv-border);
+      width: 280px;
+      padding: 2rem 0;
+      position: sticky;
+      top: 72px;
+      max-height: calc(100vh - 72px);
+      overflow-y: auto;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+    }
+
+    .sidebar-menu li {
+      margin: 0;
+    }
+
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      color: var(--fmv-text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar-menu a:hover {
+      background: var(--fmv-gold-light);
+      color: var(--fmv-gold);
+      border-left-color: var(--fmv-gold);
+    }
+
+    .sidebar-menu a.active {
+      background: var(--fmv-gold-light);
+      color: var(--fmv-gold);
+      border-left-color: var(--fmv-gold);
+      font-weight: 700;
+    }
+
+    .sidebar-menu i {
+      width: 20px;
+      text-align: center;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--fmv-border);
+      margin: 1rem 0;
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dashboard-header {
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--fmv-dark);
+    }
+
+    .dashboard-subtitle {
+      color: var(--fmv-muted);
+      font-size: 0.95rem;
+    }
+
+    /* ========== KPI CARDS ========== */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .kpi-card {
+      background: var(--fmv-bg);
+      border: 1px solid var(--fmv-border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      box-shadow: var(--shadow-premium);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card:hover {
+      border-color: var(--fmv-gold);
+      transform: translateY(-4px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--fmv-gold-light) 0%, var(--fmv-gold) 100%);
+    }
+
+    .kpi-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--fmv-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .kpi-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--fmv-dark);
+      margin-bottom: 0.5rem;
+      font-family: var(--font-heading);
+    }
+
+    .kpi-change {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .kpi-change.positive {
+      color: #10B981;
+    }
+
+    .kpi-change.negative {
+      color: #EF4444;
+    }
+
+    .kpi-change i {
+      font-size: 1rem;
+    }
+
+    /* ========== HOLDINGS TABLE ========== */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--fmv-dark);
+    }
+
+    .table-container {
+      background: var(--fmv-bg);
+      border: 1px solid var(--fmv-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-premium);
+      margin-bottom: 3rem;
+    }
+
+    .table {
+      margin: 0;
+    }
+
+    .table thead {
+      background: var(--fmv-surface);
+      border-bottom: 2px solid var(--fmv-border);
+    }
+
+    .table thead th {
+      padding: 1.25rem;
+      color: var(--fmv-text);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: none;
+    }
+
+    .table tbody td {
+      padding: 1.25rem;
+      border-color: var(--fmv-border);
+      vertical-align: middle;
+    }
+
+    .table tbody tr {
+      transition: background-color 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+      background-color: var(--fmv-gold-light);
+    }
+
+    .coin-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--fmv-dark);
+    }
+
+    .coin-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--fmv-gold-light);
+      color: var(--fmv-gold);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .price-badge {
+      display: inline-block;
+      background: var(--fmv-gold-light);
+      color: var(--fmv-gold);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .premium-badge {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10B981;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid var(--fmv-border);
+      border-radius: 8px;
+      background: var(--fmv-surface);
+      color: var(--fmv-text);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .action-btn:hover {
+      background: var(--fmv-gold);
+      color: white;
+      border-color: var(--fmv-gold);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      color: var(--fmv-muted);
+      margin-bottom: 1rem;
+    }
+
+    .empty-text {
+      color: var(--fmv-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ========== CHARTS SECTION ========== */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .chart-card {
+      background: var(--fmv-bg);
+      border: 1px solid var(--fmv-border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      box-shadow: var(--shadow-premium);
+    }
+
+    .chart-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--fmv-dark);
+    }
+
+    .asset-allocation {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 280px;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .legend-label {
+      font-weight: 600;
+      color: var(--fmv-dark);
+      font-size: 0.95rem;
+    }
+
+    .legend-value {
+      margin-left: auto;
+      font-size: 0.85rem;
+      color: var(--fmv-muted);
+      font-weight: 500;
+    }
+
+    /* ========== ACTIVITY & ACTIONS ========== */
+    .activity-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .activity-card,
+    .actions-card {
+      background: var(--fmv-bg);
+      border: 1px solid var(--fmv-border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      box-shadow: var(--shadow-premium);
+    }
+
+    .activity-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .timeline-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--fmv-gold-light);
+      color: var(--fmv-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+
+    .timeline-content {
+      flex: 1;
+    }
+
+    .timeline-title {
+      font-weight: 600;
+      color: var(--fmv-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-time {
+      font-size: 0.85rem;
+      color: var(--fmv-muted);
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .action-button {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 1rem;
+      background: var(--fmv-surface);
+      border: 1px solid var(--fmv-border);
+      border-radius: var(--radius-sm);
+      color: var(--fmv-text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .action-button:hover {
+      background: var(--fmv-gold-light);
+      border-color: var(--fmv-gold);
+      color: var(--fmv-gold);
+      transform: translateX(4px);
+    }
+
+    .action-button i {
+      font-size: 1.2rem;
+    }
+
+    /* ========== FOOTER ========== */
+    .footer-premium {
+      background: var(--fmv-bg);
+      border-top: 1px solid var(--fmv-border);
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+
+    .footer-link {
+      display: block;
+      color: var(--fmv-text);
+      text-decoration: none;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--fmv-gold); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 992px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main-content {
+        padding: 1.5rem;
+      }
+
+      .activity-section {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      .table {
+        min-width: 500px;
+      }
+
+      .action-buttons {
+        flex-wrap: wrap;
+      }
+
+      .main-content {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===============================================
+     NAVBAR
+=============================================== -->
+<nav class="navbar navbar-expand-lg navbar-fmv">
+  <div class="container-fluid">
+    <a class="navbar-brand-fmv" href="index.html">
+      <div class="logo-container">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">FMV<span>.GOLD</span></div>
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <div class="user-profile">
+        <div class="user-avatar">J</div>
+        <div class="d-none d-md-block">
+          <div style="font-weight: 600; font-size: 0.9rem;">John Collector</div>
+          <div style="font-size: 0.8rem; color: var(--fmv-muted);">Premium Member</div>
+        </div>
+        <i class="bi bi-chevron-down" style="color: var(--fmv-muted); font-size: 0.8rem;"></i>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div style="display: flex; flex: 1;">
+
+<!-- ===============================================
+     SIDEBAR
+=============================================== -->
+<aside class="sidebar d-none d-lg-block">
+  <ul class="sidebar-menu">
+    <li><a href="dashboard.html" class="active"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+    <li><a href="#"><i class="bi bi-coin"></i> My Holdings</a></li>
+    <li><a href="#"><i class="bi bi-graph-up"></i> Performance</a></li>
+    <li><a href="#"><i class="bi bi-bell"></i> Price Alerts</a></li>
+    <li><a href="#"><i class="bi bi-file-earmark-pdf"></i> Reports</a></li>
+    <div class="sidebar-divider"></div>
+    <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
+    <li><a href="#"><i class="bi bi-question-circle"></i> Help</a></li>
+    <li><a href="index.html"><i class="bi bi-door-left"></i> Logout</a></li>
+  </ul>
+</aside>
+
+<!-- ===============================================
+     MAIN CONTENT
+=============================================== -->
+<main class="main-content" style="flex: 1;">
+
+  <!-- Dashboard Header -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Portfolio Dashboard</h1>
+    <p class="dashboard-subtitle">Track and manage your precious metals collection in real-time.</p>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label"><i class="bi bi-wallet2 me-2"></i>Total Portfolio Value</div>
+      <div class="kpi-value">$42,850.50</div>
+      <div class="kpi-change positive">
+        <i class="bi bi-arrow-up"></i> +$5,240.25 (14.0%)
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label"><i class="bi bi-percent me-2"></i>Monthly Change</div>
+      <div class="kpi-value">+12.4%</div>
+      <div class="kpi-change positive">
+        <i class="bi bi-arrow-up"></i> Strong uptrend
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label"><i class="bi bi-box me-2"></i>Coins in Collection</div>
+      <div class="kpi-value">47</div>
+      <div class="kpi-change" style="color: var(--fmv-muted);">
+        <i class="bi bi-info-circle"></i> 12 graded coins
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label"><i class="bi bi-clock-history me-2"></i>Last Updated</div>
+      <div class="kpi-value" style="font-size: 1.3rem;">Today</div>
+      <div class="kpi-change" style="color: var(--fmv-muted);">
+        <i class="bi bi-check-circle"></i> 2:45 PM EST
+      </div>
+    </div>
+  </div>
+
+  <!-- Holdings Table -->
+  <h2 class="section-title">My Holdings</h2>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Coin Name</th>
+          <th>Quantity</th>
+          <th>Spot Price</th>
+          <th>Premium</th>
+          <th>Total Value</th>
+          <th style="text-align: center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="coin-name">
+              <div class="coin-icon">🦅</div>
+              <span>American Gold Eagle</span>
+            </div>
+          </td>
+          <td><strong>5</strong></td>
+          <td><span class="price-badge">$2,450.20</span></td>
+          <td><span class="premium-badge">+5.2%</span></td>
+          <td><strong>$12,251.00</strong></td>
+          <td style="text-align: center;">
+            <div class="action-buttons">
+              <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+              <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+              <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="coin-name">
+              <div class="coin-icon">🦬</div>
+              <span>American Buffalo</span>
+            </div>
+          </td>
+          <td><strong>3</strong></td>
+          <td><span class="price-badge">$2,485.00</span></td>
+          <td><span class="premium-badge">+6.8%</span></td>
+          <td><strong>$7,455.00</strong></td>
+          <td style="text-align: center;">
+            <div class="action-buttons">
+              <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+              <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+              <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="coin-name">
+              <div class="coin-icon">🍁</div>
+              <span>Canadian Maple Leaf</span>
+            </div>
+          </td>
+          <td><strong>10</strong></td>
+          <td><span class="price-badge">$2,410.50</span></td>
+          <td><span class="premium-badge">+3.1%</span></td>
+          <td><strong>$24,105.00</strong></td>
+          <td style="text-align: center;">
+            <div class="action-buttons">
+              <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+              <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+              <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="coin-name">
+              <div class="coin-icon">🦁</div>
+              <span>South African Krugerrand</span>
+            </div>
+          </td>
+          <td><strong>15</strong></td>
+          <td><span class="price-badge">$2,390.00</span></td>
+          <td><span class="premium-badge">+2.5%</span></td>
+          <td><strong>$35,850.00</strong></td>
+          <td style="text-align: center;">
+            <div class="action-buttons">
+              <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+              <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+              <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="coin-name">
+              <div class="coin-icon">💚</div>
+              <span>Silver Britannia</span>
+            </div>
+          </td>
+          <td><strong>25</strong></td>
+          <td><span class="price-badge">$30.45</span></td>
+          <td><span class="premium-badge">+2.1%</span></td>
+          <td><strong>$761.25</strong></td>
+          <td style="text-align: center;">
+            <div class="action-buttons">
+              <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+              <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+              <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="coin-name">
+              <div class="coin-icon">💜</div>
+              <span>Platinum Palladium</span>
+            </div>
+          </td>
+          <td><strong>8</strong></td>
+          <td><span class="price-badge">$1,025.00</span></td>
+          <td><span class="premium-badge">+4.3%</span></td>
+          <td><strong>$8,200.00</strong></td>
+          <td style="text-align: center;">
+            <div class="action-buttons">
+              <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+              <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+              <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="coin-name">
+              <div class="coin-icon">🏛️</div>
+              <span>US Gold $20 Liberty</span>
+            </div>
+          </td>
+          <td><strong>2</strong></td>
+          <td><span class="price-badge">$2,890.00</span></td>
+          <td><span class="premium-badge">+12.5%</span></td>
+          <td><strong>$5,780.00</strong></td>
+          <td style="text-align: center;">
+            <div class="action-buttons">
+              <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+              <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+              <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="coin-name">
+              <div class="coin-icon">👑</div>
+              <span>British Sovereign Gold</span>
+            </div>
+          </td>
+          <td><strong>12</strong></td>
+          <td><span class="price-badge">$510.75</span></td>
+          <td><span class="premium-badge">+3.8%</span></td>
+          <td><strong>$6,129.00</strong></td>
+          <td style="text-align: center;">
+            <div class="action-buttons">
+              <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+              <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+              <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Charts Section -->
+  <h2 class="section-title">Portfolio Analytics</h2>
+  <div class="charts-grid">
+    <!-- Asset Allocation -->
+    <div class="chart-card">
+      <h3 class="chart-title">Asset Allocation</h3>
+      <div class="chart-container">
+        <canvas id="assetAllocationChart"></canvas>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 100%);"></div>
+          <span class="legend-label">Gold</span>
+          <span class="legend-value">68% • $29,098</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: linear-gradient(135deg, #E5E7EB 0%, #9CA3AF 100%);"></div>
+          <span class="legend-label">Silver</span>
+          <span class="legend-value">22% • $9,427</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: linear-gradient(135deg, #DDD6FE 0%, #8B5CF6 100%);"></div>
+          <span class="legend-label">Platinum</span>
+          <span class="legend-value">10% • $4,285</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Price Trend Chart -->
+    <div class="chart-card">
+      <h3 class="chart-title">Price Trends (30 Days)</h3>
+      <div class="chart-container">
+        <canvas id="priceTrendChart"></canvas>
+      </div>
+      <small style="color: var(--fmv-muted); margin-top: 1rem; display: block;">Spot price average over last 30 days</small>
+    </div>
+  </div>
+
+  <!-- Activity & Actions -->
+  <div class="activity-section">
+    <!-- Recent Activity -->
+    <div class="activity-card">
+      <h3 class="chart-title">Recent Activity</h3>
+      <div class="activity-timeline">
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="bi bi-plus-circle"></i></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Added British Sovereign Gold (12 coins)</div>
+            <div class="timeline-time">Today, 3:22 PM</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="bi bi-plus-circle"></i></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Added American Gold Eagle (5 coins)</div>
+            <div class="timeline-time">Today, 2:45 PM</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="bi bi-bell"></i></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Price Alert: Silver Spot Reached $31.50</div>
+            <div class="timeline-time">Yesterday, 4:15 PM</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="bi bi-bell"></i></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Price Alert: Gold Spot Reached Target</div>
+            <div class="timeline-time">Yesterday, 10:20 AM</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="bi bi-file-earmark"></i></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Generated IRA Compliance Report (Q1 2026)</div>
+            <div class="timeline-time">3 days ago</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="bi bi-pencil"></i></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Updated Portfolio Premium Tracking</div>
+            <div class="timeline-time">5 days ago</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="bi bi-download"></i></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Exported Portfolio to CSV</div>
+            <div class="timeline-time">7 days ago</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="bi bi-arrow-right-circle"></i></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Portfolio Value Exceeded $40,000</div>
+            <div class="timeline-time">10 days ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="actions-card">
+      <h3 class="chart-title">Quick Actions</h3>
+      <div class="quick-actions">
+        <a href="#" class="action-button">
+          <i class="bi bi-plus-lg"></i>
+          <span>Add New Coin</span>
+        </a>
+        <a href="#" class="action-button">
+          <i class="bi bi-file-earmark-pdf"></i>
+          <span>Generate Report</span>
+        </a>
+        <a href="#" class="action-button">
+          <i class="bi bi-bell"></i>
+          <span>Set Price Alert</span>
+        </a>
+        <a href="#" class="action-button">
+          <i class="bi bi-download"></i>
+          <span>Export Portfolio</span>
+        </a>
+        <a href="index.html" class="action-button">
+          <i class="bi bi-arrow-left"></i>
+          <span>Back to Home</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+</div>
+
+<!-- ===============================================
+     FOOTER
+=============================================== -->
+<footer class="footer-premium">
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <div class="col-lg-4">
+        <a class="navbar-brand-fmv mb-4 d-inline-block" href="#">
+          <div class="logo-container">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="logo-text">FMV<span>.GOLD</span></div>
+        </a>
+        <p class="text-muted pe-lg-5">The gold standard for precious metals portfolio management. Independent. Secure. Accurate.</p>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fmv-muted); margin-bottom: 1.5rem;">Product</h5>
+        <a href="features.html" class="footer-link">Features</a>
+        <a href="pricing.html" class="footer-link">Pricing</a>
+        <a href="how-it-works.html" class="footer-link">How It Works</a>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fmv-muted); margin-bottom: 1.5rem;">Company</h5>
+        <a href="about.html" class="footer-link">About</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="col-lg-4 footer-col">
+        <h5 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fmv-muted); margin-bottom: 1.5rem;">Stay Informed</h5>
+        <p class="small text-muted mb-4">Receive market insights and regulatory updates directly in your inbox.</p>
+        <div class="input-group">
+          <input type="email" class="form-control border-end-0 py-3 bg-light" placeholder="Email address" style="border-radius: 12px 0 0 12px;" />
+          <button class="btn btn-gold px-4" style="border-radius: 0 12px 12px 0;">Join</button>
+        </div>
+      </div>
+    </div>
+    
+    <hr class="my-5 opacity-10" />
+    
+    <div class="row align-items-center">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <p class="small text-muted mb-0">© 2026 Fair Market Value. All Rights Reserved.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <div class="d-flex justify-content-md-end gap-4">
+          <a href="#" class="footer-link small mb-0">Privacy Policy</a>
+          <a href="#" class="footer-link small mb-0">Terms of Service</a>
+          <a href="#" class="footer-link small mb-0">Disclaimers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Chart.js Global Options
+  Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+  Chart.defaults.color = '#9CA3AF';
+  Chart.defaults.borderColor = '#E5E7EB';
+
+  // Asset Allocation Doughnut Chart
+  const assetAllocationCtx = document.getElementById('assetAllocationChart').getContext('2d');
+  const assetAllocationChart = new Chart(assetAllocationCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Gold', 'Silver', 'Platinum'],
+      datasets: [{
+        data: [68, 22, 10],
+        backgroundColor: [
+          'rgba(197, 160, 40, 0.9)',
+          'rgba(203, 213, 225, 0.7)',
+          'rgba(139, 92, 246, 0.8)'
+        ],
+        borderColor: [
+          '#C5A028',
+          '#9CA3AF',
+          '#8B5CF6'
+        ],
+        borderWidth: 2,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          backgroundColor: 'rgba(17, 24, 39, 0.9)',
+          padding: 12,
+          titleFont: { size: 14, weight: 'bold' },
+          bodyFont: { size: 13 },
+          borderColor: '#C5A028',
+          borderWidth: 1,
+          callbacks: {
+            label: function(context) {
+              return context.label + ': ' + context.parsed + '%';
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // Price Trend Line Chart
+  const priceTrendCtx = document.getElementById('priceTrendChart').getContext('2d');
+  const priceTrendChart = new Chart(priceTrendCtx, {
+    type: 'line',
+    data: {
+      labels: ['Day 1', 'Day 4', 'Day 8', 'Day 12', 'Day 16', 'Day 20', 'Day 24', 'Day 28', 'Day 29', 'Day 30'],
+      datasets: [{
+        label: 'Gold Spot Price (USD/oz)',
+        data: [2280, 2310, 2295, 2340, 2320, 2365, 2385, 2410, 2420, 2450],
+        borderColor: '#C5A028',
+        backgroundColor: 'rgba(197, 160, 40, 0.1)',
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 5,
+        pointBackgroundColor: '#C5A028',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointHoverRadius: 7,
+        pointHoverBackgroundColor: '#A68720'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: {
+            font: { size: 13, weight: '600' },
+            color: '#111827',
+            padding: 16,
+            usePointStyle: true,
+            pointStyle: 'circle'
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(17, 24, 39, 0.9)',
+          padding: 12,
+          titleFont: { size: 14, weight: 'bold' },
+          bodyFont: { size: 13 },
+          borderColor: '#C5A028',
+          borderWidth: 1,
+          callbacks: {
+            label: function(context) {
+              return '$' + context.parsed.y.toFixed(2);
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          grid: {
+            color: 'rgba(229, 231, 235, 0.5)',
+            drawBorder: false
+          },
+          ticks: {
+            color: '#9CA3AF',
+            font: { size: 12 },
+            callback: function(value) {
+              return '$' + value;
+            }
+          }
+        },
+        x: {
+          grid: {
+            display: false,
+            drawBorder: false
+          },
+          ticks: {
+            color: '#9CA3AF',
+            font: { size: 12 }
+          }
+        }
+      }
+    }
+  });
+
+  // Animate KPI cards on load
+  document.querySelectorAll('.kpi-card').forEach((card, index) => {
+    card.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s both`;
+  });
+
+  // Add animation to page
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Table row hover effect
+  document.querySelectorAll('.table tbody tr').forEach(row => {
+    row.addEventListener('mouseenter', function() {
+      this.style.transform = 'scale(1.01)';
+    });
+    row.addEventListener('mouseleave', function() {
+      this.style.transform = 'scale(1)';
+    });
+  });
+
+  // Quick action button handlers
+  document.querySelectorAll('.action-button').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      const action = this.textContent.trim();
+      if (action !== 'Back to Home') {
+        e.preventDefault();
+        console.log('Action clicked:', action);
+      }
+    });
+  });
+
+  // Handle responsive chart resizing
+  window.addEventListener('resize', function() {
+    assetAllocationChart.resize();
+    priceTrendChart.resize();
+  });
+</script>
+
+</body>
+</html>

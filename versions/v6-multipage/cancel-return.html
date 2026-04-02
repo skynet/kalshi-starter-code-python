@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account Reactivated — Fair Market Value</title>
+
+  <!-- Google Fonts: Cinzel + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <style>
+    :root {
+      --fmv-gold:       #C5A028;
+      --fmv-gold-dark:  #A68720;
+      --fmv-gold-light: rgba(197, 160, 40, 0.1);
+      --fmv-platinum:   #F2F3F4;
+      --fmv-dark:       #111827;
+      --fmv-text:       #4B5563;
+      --fmv-muted:      #9CA3AF;
+      --fmv-bg:         #FFFFFF;
+      --fmv-surface:    #F9FAFB;
+      --fmv-border:     #E5E7EB;
+      
+      --font-heading:   'Cinzel', serif;
+      --font-body:      'Plus Jakarta Sans', sans-serif;
+      
+      --radius-lg:      32px;
+      --radius-md:      24px;
+      --radius-sm:      16px;
+      --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes confettiSway {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(20px); }
+      75% { transform: translateX(-20px); }
+    }
+
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--fmv-gold);
+      opacity: 0;
+      animation: confettiFall 3s ease-in forwards;
+    }
+
+    .confetti:nth-child(odd) {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 100%);
+    }
+
+    .confetti:nth-child(even) {
+      background: var(--fmv-gold-dark);
+    }
+
+    @keyframes particleBurst {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+      }
+    }
+
+    .particle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      animation: particleBurst 1.2s ease-out forwards;
+    }
+
+    .particle.gold {
+      background: var(--fmv-gold);
+      box-shadow: 0 0 8px rgba(197, 160, 40, 0.6);
+    }
+
+    .particle.gold-light {
+      background: #EEDC82;
+      box-shadow: 0 0 6px rgba(238, 220, 130, 0.8);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--fmv-bg);
+      color: var(--fmv-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--fmv-dark);
+      font-weight: 700;
+    }
+
+    .navbar-fmv {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--fmv-border);
+      padding: 1rem 0;
+    }
+
+    .navbar-brand-fmv {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-container {
+      width: 40px;
+      height: 40px;
+      background: var(--fmv-gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(197, 160, 40, 0.15);
+    }
+
+    .logo-text {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--fmv-dark);
+      letter-spacing: 0.05em;
+    }
+
+    .logo-text span {
+      color: var(--fmv-gold);
+      font-weight: 400;
+    }
+
+    .nav-link-fmv {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--fmv-dark) !important;
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+
+    .nav-link-fmv:hover {
+      color: var(--fmv-gold) !important;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark) !important;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(197, 160, 40, 0.15);
+    }
+
+    .btn-gold:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(197, 160, 40, 0.25);
+    }
+
+    .reactivation-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    .reactivation-content {
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .checkmark-icon {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2.5rem;
+      box-shadow: 0 20px 50px rgba(197, 160, 40, 0.2);
+      animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .checkmark-icon i {
+      color: var(--fmv-dark);
+      font-size: 3.5rem;
+    }
+
+    @keyframes scaleIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .reactivation-heading {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .reactivation-subheading {
+      font-size: 1.1rem;
+      color: var(--fmv-text);
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Welcome back section with key benefits */
+    .welcome-benefits {
+      background: var(--fmv-surface);
+      border-radius: var(--radius-md);
+      padding: 36px;
+      margin-bottom: 3rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 1.25rem;
+    }
+
+    .benefit-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .benefit-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--fmv-gold-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fmv-gold);
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+
+    .benefit-text {
+      color: var(--fmv-dark);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-action {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark) !important;
+      font-weight: 700;
+      padding: 18px 40px;
+      border-radius: 18px;
+      border: none;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(197, 160, 40, 0.15);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary-action:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(197, 160, 40, 0.25);
+      color: var(--fmv-dark) !important;
+    }
+
+    .btn-secondary-action {
+      background: var(--fmv-bg);
+      color: var(--fmv-dark) !important;
+      font-weight: 700;
+      padding: 18px 40px;
+      border: 2px solid var(--fmv-border);
+      border-radius: 18px;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-secondary-action:hover {
+      border-color: var(--fmv-gold);
+      color: var(--fmv-dark) !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .footer-premium {
+      background: var(--fmv-bg);
+      border-top: 1px solid var(--fmv-border);
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+
+    .footer-col h5 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fmv-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-link {
+      display: block;
+      color: var(--fmv-text);
+      text-decoration: none;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--fmv-gold);
+    }
+
+    @media (max-width: 768px) {
+      .welcome-benefits {
+        padding: 28px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn-primary-action,
+      .btn-secondary-action {
+        width: 100%;
+      }
+
+      .checkmark-icon {
+        width: 100px;
+        height: 100px;
+      }
+
+      .checkmark-icon i {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Confetti Container -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- ===============================================
+     NAVBAR
+=============================================== -->
+<nav class="navbar navbar-expand-lg navbar-fmv sticky-top">
+  <div class="container">
+    <a class="navbar-brand-fmv" href="index.html">
+      <div class="logo-container">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">FMV<span>.GOLD</span></div>
+    </a>
+  </div>
+</nav>
+
+<!-- ===============================================
+     REACTIVATION CONTENT
+=============================================== -->
+<div class="reactivation-container">
+  <div class="reactivation-content">
+    <!-- Success Checkmark -->
+    <div class="checkmark-icon">
+      <i class="bi bi-check-lg"></i>
+    </div>
+
+    <!-- Main Heading & Subheading -->
+    <h1 class="reactivation-heading">Your Account is Now Active!</h1>
+    <p class="reactivation-subheading">Welcome back. Your portfolio, alerts, and all your data are right where you left them.</p>
+
+    <!-- Welcome Back Benefits -->
+    <div class="welcome-benefits">
+      <div class="benefit-item">
+        <div class="benefit-icon"><i class="bi bi-pie-chart"></i></div>
+        <p class="benefit-text">Portfolio & Price Alerts Restored</p>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-icon"><i class="bi bi-safe"></i></div>
+        <p class="benefit-text">All Your Data Fully Preserved</p>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-icon"><i class="bi bi-lightning-fill"></i></div>
+        <p class="benefit-text">Live Valuations Active</p>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <a href="#" class="btn-primary-action">Get Started <i class="bi bi-arrow-right ms-2"></i></a>
+      <a href="index.html" class="btn-secondary-action">Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===============================================
+     FOOTER
+=============================================== -->
+<footer class="footer-premium">
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <div class="col-lg-4">
+        <a class="navbar-brand-fmv mb-4 d-inline-block" href="index.html">
+          <div class="logo-container">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="logo-text">FMV<span>.GOLD</span></div>
+        </a>
+        <p class="text-muted pe-lg-5">The gold standard for precious metals portfolio management. Independent. Secure. Accurate.</p>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5>Product</h5>
+        <a href="features.html" class="footer-link">Features</a>
+        <a href="pricing.html" class="footer-link">Pricing</a>
+        <a href="how-it-works.html" class="footer-link">How It Works</a>
+        <a href="whats-my-coin-worth.html" class="footer-link">Valuations</a>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5>Company</h5>
+        <a href="about.html" class="footer-link">About Us</a>
+        <a href="blog.html" class="footer-link">Blog</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+        <a href="sitemap.html" class="footer-link">Sitemap</a>
+      </div>
+      <div class="col-lg-4 footer-col">
+        <h5>Stay Informed</h5>
+        <p class="small text-muted mb-4">Receive market insights and regulatory updates directly in your inbox.</p>
+        <div class="input-group">
+          <input type="email" class="form-control border-end-0 py-3 bg-light" placeholder="Email address" style="border-radius: 12px 0 0 12px;" />
+          <button class="btn btn-gold px-4" style="border-radius: 0 12px 12px 0;">Join</button>
+        </div>
+      </div>
+    </div>
+    
+    <hr class="my-5 opacity-10" />
+    
+    <div class="row align-items-center">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <p class="small text-muted mb-0">© 2026 Fair Market Value. All Rights Reserved.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <div class="d-flex justify-content-md-end gap-4">
+          <a href="#" class="footer-link small mb-0">Privacy Policy</a>
+          <a href="#" class="footer-link small mb-0">Terms of Service</a>
+          <a href="#" class="footer-link small mb-0">Disclaimers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Create particle burst from checkmark
+  function createParticleBurst() {
+    const checkmark = document.querySelector('.checkmark-icon');
+    if (!checkmark) return;
+    
+    const rect = checkmark.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    const particleCount = 24;
+    const burstRadius = 150;
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = `particle ${i % 2 === 0 ? 'gold' : 'gold-light'}`;
+      
+      // Calculate angle for radial burst
+      const angle = (i / particleCount) * Math.PI * 2;
+      const tx = Math.cos(angle) * burstRadius;
+      const ty = Math.sin(angle) * burstRadius;
+      
+      // Set custom properties for animation
+      particle.style.setProperty('--tx', tx + 'px');
+      particle.style.setProperty('--ty', ty + 'px');
+      
+      // Position at checkmark center
+      particle.style.left = centerX + 'px';
+      particle.style.top = centerY + 'px';
+      
+      // Random delay for cascading effect
+      const delay = Math.random() * 0.3;
+      particle.style.animationDelay = delay + 's';
+      
+      // Slight variation in duration
+      const duration = 1.2 + (Math.random() * 0.4 - 0.2);
+      particle.style.animationDuration = duration + 's';
+      
+      document.body.appendChild(particle);
+    }
+    
+    // Clean up particles after animation
+    setTimeout(() => {
+      document.querySelectorAll('.particle').forEach(p => p.remove());
+    }, 1800);
+  }
+
+  // Create confetti effect on page load
+  window.addEventListener('load', () => {
+    // Trigger particle burst with slight delay for visual impact
+    setTimeout(() => {
+      createParticleBurst();
+    }, 600);
+    
+    const container = document.getElementById('confettiContainer');
+    const confettiCount = 50;
+    
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      
+      // Random horizontal position
+      const randomX = Math.random() * window.innerWidth;
+      confetti.style.left = randomX + 'px';
+      
+      // Random size
+      const size = Math.random() * 8 + 4;
+      confetti.style.width = size + 'px';
+      confetti.style.height = size + 'px';
+      
+      // Random delay for staggered effect
+      const delay = Math.random() * 0.5;
+      confetti.style.animationDelay = delay + 's';
+      
+      // Random duration variation
+      const duration = Math.random() * 1 + 2.5;
+      confetti.style.animationDuration = duration + 's';
+      
+      container.appendChild(confetti);
+    }
+    
+    // Clean up after animation
+    setTimeout(() => {
+      container.innerHTML = '';
+    }, 3500);
+  });
+</script>
+
+</body>
+</html>

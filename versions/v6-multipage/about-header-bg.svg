@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Soft blur filter for depth -->
+    <filter id="softBlur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+    </filter>
+    
+    <!-- Fade to transparent at bottom -->
+    <linearGradient id="fadeOut" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0" />
+      <stop offset="70%" style="stop-color:#FFFFFF;stop-opacity:0" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Coin gradient (gold) - MUCH MORE PROMINENT -->
+    <radialGradient id="coinGold" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#F5E6D3;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#E8D4C0;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#D8C4B0;stop-opacity:0.75" />
+    </radialGradient>
+    
+    <!-- Coin gradient (silver) - MUCH MORE PROMINENT -->
+    <radialGradient id="coinSilver" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#F0F0F0;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#E0E0E0;stop-opacity:0.85" />
+      <stop offset="100%" style="stop-color:#D0D0D0;stop-opacity:0.7" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Base background -->
+  <rect width="1920" height="600" fill="#FDFBF9"/>
+  
+  <!-- Large gold coin background left - MAJOR VISIBILITY -->
+  <circle cx="200" cy="150" r="95" fill="url(#coinGold)" opacity="0.45" filter="url(#softBlur)"/>
+  
+  <!-- Silver bar middle-left - MAJOR VISIBILITY -->
+  <rect x="420" y="280" width="180" height="40" rx="8" fill="url(#coinSilver)" opacity="0.42" filter="url(#softBlur)"/>
+  
+  <!-- Small gold coin top-right - MAJOR VISIBILITY -->
+  <circle cx="1650" cy="120" r="65" fill="url(#coinGold)" opacity="0.44" filter="url(#softBlur)"/>
+  
+  <!-- Medium silver coin center - MAJOR VISIBILITY -->
+  <circle cx="950" cy="200" r="75" fill="url(#coinSilver)" opacity="0.43" filter="url(#softBlur)"/>
+  
+  <!-- Gold bar right side - MAJOR VISIBILITY -->
+  <rect x="1500" y="350" width="200" height="45" rx="10" fill="url(#coinGold)" opacity="0.41" filter="url(#softBlur)"/>
+  
+  <!-- Small silver coin bottom-left - MAJOR VISIBILITY -->
+  <circle cx="350" cy="480" r="50" fill="url(#coinSilver)" opacity="0.42" filter="url(#softBlur)"/>
+  
+  <!-- Medium gold coin middle - MAJOR VISIBILITY -->
+  <circle cx="1100" cy="380" r="70" fill="url(#coinGold)" opacity="0.43" filter="url(#softBlur)"/>
+  
+  <!-- Silver bar bottom-right - MAJOR VISIBILITY -->
+  <rect x="1200" y="450" width="160" height="35" rx="7" fill="url(#coinSilver)" opacity="0.40" filter="url(#softBlur)"/>
+  
+  <!-- Tiny accent coin top-center - MAJOR VISIBILITY -->
+  <circle cx="800" cy="100" r="40" fill="url(#coinGold)" opacity="0.40" filter="url(#softBlur)"/>
+  
+  <!-- Small gold bar left side - MAJOR VISIBILITY -->
+  <rect x="100" y="350" width="140" height="30" rx="6" fill="url(#coinGold)" opacity="0.41" filter="url(#softBlur)"/>
+  
+  <!-- Subtle accent circles for depth - MAJOR VISIBILITY -->
+  <circle cx="600" cy="80" r="45" fill="url(#coinSilver)" opacity="0.39" filter="url(#softBlur)"/>
+  <circle cx="1400" cy="250" r="55" fill="url(#coinGold)" opacity="0.42" filter="url(#softBlur)"/>
+  
+  <!-- Gradient overlay for fade to white at bottom -->
+  <rect width="1920" height="600" fill="url(#fadeOut)"/>
+</svg>

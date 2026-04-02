@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sitemap — Fair Market Value</title>
+
+  <!-- Google Fonts: Cinzel + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <style>
+    :root {
+      --fmv-gold:       #C5A028;
+      --fmv-gold-dark:  #A68720;
+      --fmv-gold-light: rgba(197, 160, 40, 0.1);
+      --fmv-platinum:   #F2F3F4;
+      --fmv-dark:       #111827;
+      --fmv-text:       #4B5563;
+      --fmv-muted:      #9CA3AF;
+      --fmv-bg:         #FFFFFF;
+      --fmv-surface:    #F9FAFB;
+      --fmv-border:     #E5E7EB;
+      
+      --font-heading:   'Cinzel', serif;
+      --font-body:      'Plus Jakarta Sans', sans-serif;
+      
+      --radius-lg:      32px;
+      --radius-md:      24px;
+      --radius-sm:      16px;
+      --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--fmv-bg);
+      color: var(--fmv-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--fmv-dark);
+      font-weight: 700;
+    }
+
+    .navbar-fmv {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--fmv-border);
+      padding: 1rem 0;
+    }
+
+    .navbar-brand-fmv {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-container {
+      width: 40px;
+      height: 40px;
+      background: var(--fmv-gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(197, 160, 40, 0.15);
+    }
+
+    .logo-text {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--fmv-dark);
+      letter-spacing: 0.05em;
+    }
+
+    .logo-text span {
+      color: var(--fmv-gold);
+      font-weight: 400;
+    }
+
+    .nav-link-fmv {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--fmv-dark) !important;
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+
+    .nav-link-fmv:hover {
+      color: var(--fmv-gold) !important;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark) !important;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(197, 160, 40, 0.15);
+    }
+
+    .btn-gold:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(197, 160, 40, 0.25);
+    }
+
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+      color: var(--fmv-platinum);
+      padding: 60px 20px;
+      margin-bottom: 0;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      color: var(--fmv-gold);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .page-header p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Sitemap Section */
+    .sitemap-section {
+      flex: 1;
+      padding: 80px 20px;
+      background: var(--fmv-surface);
+    }
+
+    .sitemap-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .sitemap-category {
+      background: var(--fmv-bg);
+      border: 2px solid var(--fmv-border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .sitemap-category:hover {
+      border-color: var(--fmv-gold);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .sitemap-category-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--fmv-gold);
+    }
+
+    .sitemap-category-heading i {
+      color: var(--fmv-gold);
+      font-size: 1.5rem;
+    }
+
+    .sitemap-category-heading h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: var(--fmv-dark);
+    }
+
+    .sitemap-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .sitemap-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: var(--fmv-surface);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: var(--fmv-dark);
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+    }
+
+    .sitemap-link:hover {
+      background: var(--fmv-gold-light);
+      border-left-color: var(--fmv-gold);
+      color: var(--fmv-gold);
+      transform: translateX(4px);
+    }
+
+    .sitemap-link i {
+      color: var(--fmv-gold);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .sitemap-link-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sitemap-link-title {
+      font-weight: 600;
+      color: var(--fmv-dark);
+    }
+
+    .sitemap-link-desc {
+      font-size: 0.85rem;
+      color: var(--fmv-muted);
+    }
+
+    /* Hidden Pages Section */
+    .hidden-section {
+      background: linear-gradient(135deg, rgba(197, 160, 40, 0.08) 0%, rgba(197, 160, 40, 0.04) 100%);
+      border: 2px dashed var(--fmv-gold);
+    }
+
+    .hidden-section-badge {
+      display: inline-block;
+      background: var(--fmv-gold);
+      color: var(--fmv-dark);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Footer */
+    .footer-premium {
+      background: var(--fmv-bg);
+      border-top: 1px solid var(--fmv-border);
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+
+    .footer-col h5 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fmv-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-link {
+      display: block;
+      color: var(--fmv-text);
+      text-decoration: none;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--fmv-gold);
+    }
+
+
+
+    @media (max-width: 768px) {
+      .sitemap-category {
+        padding: 24px;
+      }
+
+      .sitemap-links {
+        grid-template-columns: 1fr;
+      }
+
+      .page-header {
+        padding: 40px 20px;
+      }
+
+      .sitemap-section {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===============================================
+     NAVBAR
+=============================================== -->
+<nav class="navbar navbar-expand-lg navbar-fmv sticky-top">
+  <div class="container">
+    <a class="navbar-brand-fmv" href="index.html">
+      <div class="logo-container">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">FMV<span>.GOLD</span></div>
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <i class="bi bi-list fs-2"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="index.html#features">Features</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="index.html#how">How It Works</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="index.html#coins">Coins</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="pricing.html">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-fmv" href="whats-my-coin-worth.html">FAQ</a></li>
+        <li class="nav-item ms-lg-4"><a class="nav-link nav-link-fmv fw-bold" href="#">Login</a></li>
+        <li class="nav-item ms-lg-2"><a href="pricing.html" class="btn btn-gold px-4">Sign Up</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ===============================================
+     PAGE HEADER
+=============================================== -->
+<div class="page-header">
+  <div class="container">
+    <h1>Site Map</h1>
+    <p>Navigate through our complete website structure. Explore all pages and resources.</p>
+  </div>
+</div>
+
+<!-- ===============================================
+     SITEMAP CONTENT
+=============================================== -->
+<div class="sitemap-section">
+  <div class="sitemap-grid">
+    
+    <!-- Main Navigation Pages -->
+    <div class="sitemap-category">
+      <div class="sitemap-category-heading">
+        <i class="bi bi-house-fill"></i>
+        <h2>Main Pages</h2>
+      </div>
+      <div class="sitemap-links">
+        <a href="index.html" class="sitemap-link">
+          <i class="bi bi-house"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Home</div>
+            <div class="sitemap-link-desc">Main landing page</div>
+          </div>
+        </a>
+        <a href="pricing.html" class="sitemap-link">
+          <i class="bi bi-tags"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Pricing</div>
+            <div class="sitemap-link-desc">Plans & pricing tiers</div>
+          </div>
+        </a>
+        <a href="features.html" class="sitemap-link">
+          <i class="bi bi-star"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Features</div>
+            <div class="sitemap-link-desc">Product capabilities</div>
+          </div>
+        </a>
+        <a href="whats-my-coin-worth.html" class="sitemap-link">
+          <i class="bi bi-question-circle"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">FAQ</div>
+            <div class="sitemap-link-desc">Coin valuations</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Company Pages -->
+    <div class="sitemap-category">
+      <div class="sitemap-category-heading">
+        <i class="bi bi-building"></i>
+        <h2>Company Pages</h2>
+      </div>
+      <div class="sitemap-links">
+        <a href="about.html" class="sitemap-link">
+          <i class="bi bi-info-circle"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">About Us</div>
+            <div class="sitemap-link-desc">Our mission & team</div>
+          </div>
+        </a>
+        <a href="blog.html" class="sitemap-link">
+          <i class="bi bi-newspaper"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Blog</div>
+            <div class="sitemap-link-desc">News & insights</div>
+          </div>
+        </a>
+        <a href="contact.html" class="sitemap-link">
+          <i class="bi bi-envelope"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Contact</div>
+            <div class="sitemap-link-desc">Get in touch with us</div>
+          </div>
+        </a>
+        <a href="how-it-works.html" class="sitemap-link">
+          <i class="bi bi-gear"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">How It Works</div>
+            <div class="sitemap-link-desc">Our process explained</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Resource Pages -->
+    <div class="sitemap-category">
+      <div class="sitemap-category-heading">
+        <i class="bi bi-book"></i>
+        <h2>Resources</h2>
+      </div>
+      <div class="sitemap-links">
+        <a href="popular-coins.html" class="sitemap-link">
+          <i class="bi bi-coin"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Popular Coins</div>
+            <div class="sitemap-link-desc">Featured coins catalog</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hidden/Special Pages -->
+    <div class="sitemap-category hidden-section">
+      <div class="sitemap-category-heading">
+        <i class="bi bi-eye-slash"></i>
+        <h2>Hidden Pages</h2>
+      </div>
+      <div class="hidden-section-badge">Not Linked in Main Navigation</div>
+      <p class="mb-3 text-muted small">These pages are part of specific user flows and are not directly accessible from the main navigation.</p>
+      <div class="sitemap-links">
+        <div class="sitemap-link">
+          <i class="bi bi-check-circle"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Thank You</div>
+            <div class="sitemap-link-desc">Signup confirmation page</div>
+          </div>
+        </div>
+        <div class="sitemap-link">
+          <i class="bi bi-star-fill"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Sponsored Thank You</div>
+            <div class="sitemap-link-desc">Sponsored membership activation</div>
+          </div>
+        </div>
+        <div class="sitemap-link">
+          <i class="bi bi-x-circle"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Cancel Account</div>
+            <div class="sitemap-link-desc">Account cancellation form</div>
+          </div>
+        </div>
+        <div class="sitemap-link">
+          <i class="bi bi-check2"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Cancel Confirmation</div>
+            <div class="sitemap-link-desc">Cancellation confirmed</div>
+          </div>
+        </div>
+        <div class="sitemap-link">
+          <i class="bi bi-arrow-counterclockwise"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Account Reactivation</div>
+            <div class="sitemap-link-desc">Welcome back confirmation</div>
+          </div>
+        </div>
+        <div class="sitemap-link">
+          <i class="bi bi-file-earmark-text"></i>
+          <div class="sitemap-link-text">
+            <div class="sitemap-link-title">Membership Consent</div>
+            <div class="sitemap-link-desc">Sponsored membership form</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===============================================
+     FOOTER
+=============================================== -->
+<footer class="footer-premium">
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <div class="col-lg-4">
+        <a class="navbar-brand-fmv mb-4 d-inline-block" href="index.html">
+          <div class="logo-container">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="logo-text">FMV<span>.GOLD</span></div>
+        </a>
+        <p class="text-muted pe-lg-5">The gold standard for precious metals portfolio management. Independent. Secure. Accurate.</p>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5>Product</h5>
+        <a href="features.html" class="footer-link">Features</a>
+        <a href="pricing.html" class="footer-link">Pricing</a>
+        <a href="how-it-works.html" class="footer-link">How It Works</a>
+        <a href="whats-my-coin-worth.html" class="footer-link">Valuations</a>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5>Company</h5>
+        <a href="about.html" class="footer-link">About Us</a>
+        <a href="blog.html" class="footer-link">Blog</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+        <a href="sitemap.html" class="footer-link">Sitemap</a>
+      </div>
+      <div class="col-lg-4 footer-col">
+        <h5>Stay Informed</h5>
+        <p class="small text-muted mb-4">Receive market insights and regulatory updates directly in your inbox.</p>
+        <div class="input-group">
+          <input type="email" class="form-control border-end-0 py-3 bg-light" placeholder="Email address" style="border-radius: 12px 0 0 12px;" />
+          <button class="btn btn-gold px-4" style="border-radius: 0 12px 12px 0;">Join</button>
+        </div>
+      </div>
+    </div>
+    <hr class="my-5 opacity-10" />
+    <div class="row align-items-center">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <p class="small text-muted mb-0">© 2026 Fair Market Value. All Rights Reserved.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <div class="d-flex justify-content-md-end gap-4">
+          <a href="#" class="footer-link small mb-0">Privacy Policy</a>
+          <a href="#" class="footer-link small mb-0">Terms of Service</a>
+          <a href="#" class="footer-link small mb-0">Disclaimers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

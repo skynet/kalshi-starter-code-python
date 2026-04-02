@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Dashboard — Fair Market Value</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.8/css/dataTables.bootstrap5.min.css" />
+
+  <!-- ECharts -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+  <style>
+    :root {
+      --fmv-gold:       #C5A028;
+      --fmv-gold-dark:  #A68720;
+      --fmv-gold-light: rgba(197, 160, 40, 0.1);
+      --fmv-gold-glow:  rgba(197, 160, 40, 0.03);
+      --fmv-platinum:   #F2F3F4;
+      --fmv-dark:       #111827;
+      --fmv-text:       #4B5563;
+      --fmv-muted:      #9CA3AF;
+      --fmv-bg:         #FFFFFF;
+      --fmv-surface:    #F9FAFB;
+      --fmv-border:     #E5E7EB;
+      
+      --font-heading:   'Cinzel', serif;
+      --font-body:      'Plus Jakarta Sans', sans-serif;
+      
+      --radius-lg:      32px;
+      --radius-md:      24px;
+      --radius-sm:      16px;
+      --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
+      --shadow-gold:    0 10px 30px rgba(197, 160, 40, 0.15);
+      
+      --glass-bg:       rgba(255, 255, 255, 0.7);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--fmv-surface);
+      color: var(--fmv-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--fmv-dark);
+      font-weight: 700;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar-fmv {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--fmv-border);
+      padding: 1rem 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .navbar-brand-fmv {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-container {
+      width: 40px;
+      height: 40px;
+      background: var(--fmv-gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .logo-text {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--fmv-dark);
+      letter-spacing: 0.05em;
+    }
+
+    .logo-text span {
+      color: var(--fmv-gold);
+      font-weight: 400;
+    }
+
+    .nav-link-fmv {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--fmv-dark) !important;
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+
+    .nav-link-fmv:hover { color: var(--fmv-gold) !important; }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 50%, var(--fmv-gold-dark) 100%);
+      color: var(--fmv-dark) !important;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-gold);
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .btn-gold:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(197, 160, 40, 0.25);
+      color: var(--fmv-dark) !important;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 12px;
+      transition: background 0.2s;
+    }
+
+    .user-profile:hover {
+      background: var(--fmv-gold-light);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fmv-dark);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* ========== SIDEBAR ========== */
+    .sidebar {
+      background: var(--fmv-bg);
+      border-right: 1px solid var(--fmv-border);
+      width: 280px;
+      padding: 2rem 0;
+      position: sticky;
+      top: 72px;
+      max-height: calc(100vh - 72px);
+      overflow-y: auto;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+    }
+
+    .sidebar-menu li {
+      margin: 0;
+    }
+
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      color: var(--fmv-text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar-menu a:hover {
+      background: var(--fmv-gold-light);
+      color: var(--fmv-gold);
+      border-left-color: var(--fmv-gold);
+    }
+
+    .sidebar-menu a.active {
+      background: var(--fmv-gold-light);
+      color: var(--fmv-gold);
+      border-left-color: var(--fmv-gold);
+      font-weight: 700;
+    }
+
+    .sidebar-menu i {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dashboard-header {
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--fmv-dark);
+    }
+
+    .dashboard-subtitle {
+      color: var(--fmv-muted);
+      font-size: 0.95rem;
+    }
+
+    /* ========== CHARTS GRID ========== */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .chart-card {
+      background: var(--fmv-bg);
+      border: 1px solid var(--fmv-border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      box-shadow: var(--shadow-premium);
+      transition: all 0.3s ease;
+    }
+
+    .chart-card:hover {
+      border-color: var(--fmv-gold);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+    }
+
+    .chart-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--fmv-dark);
+    }
+
+    .echarts-container {
+      width: 100%;
+      height: 350px;
+      border-radius: 12px;
+    }
+
+    /* ========== DATATABLES STYLING ========== */
+    .table-section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--fmv-dark);
+    }
+
+    .table-container {
+      background: var(--fmv-bg);
+      border: 1px solid var(--fmv-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-premium);
+    }
+
+    .dataTables_wrapper .dataTables_length label,
+    .dataTables_wrapper .dataTables_filter label {
+      color: var(--fmv-text);
+      font-weight: 600;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+      border: 1px solid var(--fmv-border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      color: var(--fmv-text);
+    }
+
+    .dataTables_wrapper .dataTables_filter input:focus {
+      outline: none;
+      border-color: var(--fmv-gold);
+      box-shadow: 0 0 0 3px var(--fmv-gold-light);
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--fmv-border);
+      border-radius: 6px;
+      margin: 0 2px;
+      background: var(--fmv-surface);
+      color: var(--fmv-text);
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+      background: var(--fmv-gold-light);
+      border-color: var(--fmv-gold);
+      color: var(--fmv-gold);
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+      background: linear-gradient(135deg, #EEDC82 0%, var(--fmv-gold) 100%);
+      color: var(--fmv-dark);
+      border-color: var(--fmv-gold);
+    }
+
+    .table {
+      margin: 0;
+    }
+
+    .table thead {
+      background: var(--fmv-surface);
+      border-bottom: 2px solid var(--fmv-border);
+    }
+
+    .table thead th {
+      padding: 1.25rem;
+      color: var(--fmv-text);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: none;
+    }
+
+    .table tbody td {
+      padding: 1.25rem;
+      border-color: var(--fmv-border);
+      vertical-align: middle;
+    }
+
+    .table tbody tr {
+      transition: background-color 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+      background-color: var(--fmv-gold-light);
+    }
+
+    .coin-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--fmv-dark);
+    }
+
+    .coin-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--fmv-gold-light);
+      color: var(--fmv-gold);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .price-badge {
+      display: inline-block;
+      background: var(--fmv-gold-light);
+      color: var(--fmv-gold);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .premium-badge {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10B981;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid var(--fmv-border);
+      border-radius: 8px;
+      background: var(--fmv-surface);
+      color: var(--fmv-text);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .action-btn:hover {
+      background: var(--fmv-gold);
+      color: white;
+      border-color: var(--fmv-gold);
+    }
+
+    /* ========== FOOTER ========== */
+    .footer-premium {
+      background: var(--fmv-bg);
+      border-top: 1px solid var(--fmv-border);
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+
+    .footer-link {
+      display: block;
+      color: var(--fmv-text);
+      text-decoration: none;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--fmv-gold); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 992px) {
+      .sidebar {
+        display: none;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .main-content {
+        padding: 1.5rem;
+      }
+
+      .dashboard-title {
+        font-size: 1.5rem;
+      }
+
+      .echarts-container {
+        height: 280px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .main-content {
+        padding: 1rem;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      .action-buttons {
+        flex-wrap: wrap;
+      }
+
+      .echarts-container {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===============================================
+     NAVBAR
+=============================================== -->
+<nav class="navbar navbar-expand-lg navbar-fmv">
+  <div class="container-fluid">
+    <a class="navbar-brand-fmv" href="index.html">
+      <div class="logo-container">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">FMV<span>.GOLD</span></div>
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <div class="user-profile">
+        <div class="user-avatar">J</div>
+        <div class="d-none d-md-block">
+          <div style="font-weight: 600; font-size: 0.9rem;">John Collector</div>
+          <div style="font-size: 0.8rem; color: var(--fmv-muted);">Premium Member</div>
+        </div>
+        <i class="bi bi-chevron-down" style="color: var(--fmv-muted); font-size: 0.8rem;"></i>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div style="display: flex; flex: 1;">
+
+<!-- ===============================================
+     SIDEBAR
+=============================================== -->
+<aside class="sidebar d-none d-lg-block">
+  <ul class="sidebar-menu">
+    <li><a href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+    <li><a href="dashboard2.html" class="active"><i class="bi bi-graph-up"></i> Advanced Analytics</a></li>
+    <li><a href="#"><i class="bi bi-coin"></i> My Holdings</a></li>
+    <li><a href="#"><i class="bi bi-bell"></i> Price Alerts</a></li>
+    <li><a href="#"><i class="bi bi-file-earmark-pdf"></i> Reports</a></li>
+    <li style="margin: 1rem 0; border-top: 1px solid #E5E7EB;"></li>
+    <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
+    <li><a href="#"><i class="bi bi-question-circle"></i> Help</a></li>
+    <li><a href="index.html"><i class="bi bi-door-left"></i> Logout</a></li>
+  </ul>
+</aside>
+
+<!-- ===============================================
+     MAIN CONTENT
+=============================================== -->
+<main class="main-content" style="flex: 1;">
+
+  <!-- Dashboard Header -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Advanced Analytics</h1>
+    <p class="dashboard-subtitle">Deep insights into your portfolio performance and market trends.</p>
+  </div>
+
+  <!-- Charts Grid -->
+  <div class="charts-grid">
+    
+    <!-- Candlestick Chart -->
+    <div class="chart-card">
+      <h3 class="chart-title"><i class="bi bi-graph-up me-2" style="color: var(--fmv-gold);"></i>Gold Price History</h3>
+      <div id="candlestickChart" class="echarts-container"></div>
+    </div>
+
+    <!-- Performance Heatmap -->
+    <div class="chart-card">
+      <h3 class="chart-title"><i class="bi bi-fire me-2" style="color: var(--fmv-gold);"></i>Portfolio Performance Heatmap</h3>
+      <div id="heatmapChart" class="echarts-container"></div>
+    </div>
+
+    <!-- Risk Gauge -->
+    <div class="chart-card">
+      <h3 class="chart-title"><i class="bi bi-speedometer me-2" style="color: var(--fmv-gold);"></i>Portfolio Risk Level</h3>
+      <div id="gaugeChart" class="echarts-container"></div>
+    </div>
+
+    <!-- Asset Composition Treemap -->
+    <div class="chart-card">
+      <h3 class="chart-title"><i class="bi bi-boxes me-2" style="color: var(--fmv-gold);"></i>Asset Composition</h3>
+      <div id="treemapChart" class="echarts-container"></div>
+    </div>
+
+  </div>
+
+  <!-- DataTables Section -->
+  <div class="table-section">
+    <h2 class="section-title"><i class="bi bi-table me-2"></i>Detailed Holdings Analysis</h2>
+    <div class="table-container">
+      <table id="holdingsTable" class="table table-hover">
+        <thead>
+          <tr>
+            <th>Coin Name</th>
+            <th>Quantity</th>
+            <th>Spot Price</th>
+            <th>Premium</th>
+            <th>Total Value</th>
+            <th>30-Day Change</th>
+            <th>Status</th>
+            <th style="text-align: center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="coin-name">
+                <div class="coin-icon">🦅</div>
+                <span>American Gold Eagle</span>
+              </div>
+            </td>
+            <td><strong>5</strong></td>
+            <td><span class="price-badge">$2,450.20</span></td>
+            <td><span class="premium-badge">+5.2%</span></td>
+            <td><strong>$12,251.00</strong></td>
+            <td><span style="color: #10B981; font-weight: 600;">+8.3%</span></td>
+            <td><span class="badge bg-success">Strong</span></td>
+            <td style="text-align: center;">
+              <div class="action-buttons">
+                <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+                <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="coin-name">
+                <div class="coin-icon">🦬</div>
+                <span>American Buffalo</span>
+              </div>
+            </td>
+            <td><strong>3</strong></td>
+            <td><span class="price-badge">$2,485.00</span></td>
+            <td><span class="premium-badge">+6.8%</span></td>
+            <td><strong>$7,455.00</strong></td>
+            <td><span style="color: #10B981; font-weight: 600;">+7.1%</span></td>
+            <td><span class="badge bg-success">Strong</span></td>
+            <td style="text-align: center;">
+              <div class="action-buttons">
+                <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+                <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="coin-name">
+                <div class="coin-icon">🍁</div>
+                <span>Canadian Maple Leaf</span>
+              </div>
+            </td>
+            <td><strong>10</strong></td>
+            <td><span class="price-badge">$2,410.50</span></td>
+            <td><span class="premium-badge">+3.1%</span></td>
+            <td><strong>$24,105.00</strong></td>
+            <td><span style="color: #10B981; font-weight: 600;">+6.2%</span></td>
+            <td><span class="badge bg-info">Moderate</span></td>
+            <td style="text-align: center;">
+              <div class="action-buttons">
+                <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+                <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="coin-name">
+                <div class="coin-icon">🦁</div>
+                <span>South African Krugerrand</span>
+              </div>
+            </td>
+            <td><strong>15</strong></td>
+            <td><span class="price-badge">$2,390.00</span></td>
+            <td><span class="premium-badge">+2.5%</span></td>
+            <td><strong>$35,850.00</strong></td>
+            <td><span style="color: #10B981; font-weight: 600;">+5.9%</span></td>
+            <td><span class="badge bg-success">Strong</span></td>
+            <td style="text-align: center;">
+              <div class="action-buttons">
+                <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+                <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="coin-name">
+                <div class="coin-icon">💚</div>
+                <span>Silver Britannia</span>
+              </div>
+            </td>
+            <td><strong>25</strong></td>
+            <td><span class="price-badge">$30.45</span></td>
+            <td><span class="premium-badge">+2.1%</span></td>
+            <td><strong>$761.25</strong></td>
+            <td><span style="color: #EF4444; font-weight: 600;">-1.3%</span></td>
+            <td><span class="badge bg-warning">Weak</span></td>
+            <td style="text-align: center;">
+              <div class="action-buttons">
+                <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+                <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="coin-name">
+                <div class="coin-icon">💜</div>
+                <span>Platinum Palladium</span>
+              </div>
+            </td>
+            <td><strong>8</strong></td>
+            <td><span class="price-badge">$1,025.00</span></td>
+            <td><span class="premium-badge">+4.3%</span></td>
+            <td><strong>$8,200.00</strong></td>
+            <td><span style="color: #10B981; font-weight: 600;">+9.1%</span></td>
+            <td><span class="badge bg-success">Strong</span></td>
+            <td style="text-align: center;">
+              <div class="action-buttons">
+                <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+                <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="coin-name">
+                <div class="coin-icon">🏛️</div>
+                <span>US Gold $20 Liberty</span>
+              </div>
+            </td>
+            <td><strong>2</strong></td>
+            <td><span class="price-badge">$2,890.00</span></td>
+            <td><span class="premium-badge">+12.5%</span></td>
+            <td><strong>$5,780.00</strong></td>
+            <td><span style="color: #10B981; font-weight: 600;">+11.8%</span></td>
+            <td><span class="badge bg-success">Strong</span></td>
+            <td style="text-align: center;">
+              <div class="action-buttons">
+                <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+                <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="coin-name">
+                <div class="coin-icon">👑</div>
+                <span>British Sovereign Gold</span>
+              </div>
+            </td>
+            <td><strong>12</strong></td>
+            <td><span class="price-badge">$510.75</span></td>
+            <td><span class="premium-badge">+3.8%</span></td>
+            <td><strong>$6,129.00</strong></td>
+            <td><span style="color: #10B981; font-weight: 600;">+6.4%</span></td>
+            <td><span class="badge bg-success">Strong</span></td>
+            <td style="text-align: center;">
+              <div class="action-buttons">
+                <button class="action-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+                <button class="action-btn" title="Details"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" title="Delete"><i class="bi bi-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+</div>
+
+<!-- ===============================================
+     FOOTER
+=============================================== -->
+<footer class="footer-premium">
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <div class="col-lg-4">
+        <a class="navbar-brand-fmv mb-4 d-inline-block" href="#">
+          <div class="logo-container">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 22V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M20 7L12 12L4 7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 7V12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="logo-text">FMV<span>.GOLD</span></div>
+        </a>
+        <p class="text-muted pe-lg-5">The gold standard for precious metals portfolio management. Independent. Secure. Accurate.</p>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fmv-muted); margin-bottom: 1.5rem;">Product</h5>
+        <a href="features.html" class="footer-link">Features</a>
+        <a href="pricing.html" class="footer-link">Pricing</a>
+        <a href="how-it-works.html" class="footer-link">How It Works</a>
+      </div>
+      <div class="col-6 col-lg-2 footer-col">
+        <h5 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fmv-muted); margin-bottom: 1.5rem;">Company</h5>
+        <a href="about.html" class="footer-link">About</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="col-lg-4 footer-col">
+        <h5 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fmv-muted); margin-bottom: 1.5rem;">Stay Informed</h5>
+        <p class="small text-muted mb-4">Receive market insights directly in your inbox.</p>
+        <div class="input-group">
+          <input type="email" class="form-control border-end-0 py-3 bg-light" placeholder="Email address" style="border-radius: 12px 0 0 12px;" />
+          <button class="btn btn-gold px-4" style="border-radius: 0 12px 12px 0;">Join</button>
+        </div>
+      </div>
+    </div>
+    
+    <hr class="my-5 opacity-10" />
+    
+    <div class="row align-items-center">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <p class="small text-muted mb-0">© 2026 Fair Market Value. All Rights Reserved.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <div class="d-flex justify-content-md-end gap-4">
+          <a href="#" class="footer-link small mb-0">Privacy Policy</a>
+          <a href="#" class="footer-link small mb-0">Terms of Service</a>
+          <a href="#" class="footer-link small mb-0">Disclaimers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- jQuery (required for DataTables) -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.jsdelivr.net/npm/datatables.net@1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Initialize DataTables
+  document.addEventListener('DOMContentLoaded', function() {
+    $('#holdingsTable').DataTable({
+      order: [[4, 'desc']],
+      pageLength: 10,
+      lengthMenu: [[5, 10, 25, 50], [5, 10, 25, 50]],
+      columnDefs: [
+        { orderable: false, targets: 7 } // Disable sorting on Actions column
+      ],
+      language: {
+        search: "Filter records:",
+        lengthMenu: "Show _MENU_ entries",
+        info: "Showing _START_ to _END_ of _TOTAL_ records",
+        paginate: {
+          first: "First",
+          last: "Last",
+          next: "Next",
+          previous: "Previous"
+        }
+      }
+    });
+
+    // ===== CANDLESTICK CHART =====
+    const candlestickChart = echarts.init(document.getElementById('candlestickChart'));
+    candlestickChart.setOption({
+      backgroundColor: 'transparent',
+      color: ['#C5A028'],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'cross' },
+        backgroundColor: 'rgba(17, 24, 39, 0.9)',
+        borderColor: '#C5A028',
+        textStyle: { color: '#fff', fontSize: 13 }
+      },
+      grid: { left: 50, right: 50, top: 10, bottom: 30 },
+      xAxis: {
+        type: 'category',
+        data: ['Mar 21', 'Mar 24', 'Mar 27', 'Mar 30', 'Apr 2', 'Apr 5', 'Apr 8', 'Apr 11', 'Apr 14', 'Apr 17'],
+        axisLabel: { color: '#9CA3AF', fontSize: 12 },
+        axisLine: { lineStyle: { color: '#E5E7EB' } }
+      },
+      yAxis: {
+        type: 'value',
+        axisLabel: { color: '#9CA3AF', fontSize: 12, formatter: '${value}' },
+        axisLine: { lineStyle: { color: '#E5E7EB' } },
+        splitLine: { lineStyle: { color: '#F9FAFB' } }
+      },
+      series: [{
+        data: [
+          [2280, 2320, 2260, 2310],
+          [2310, 2350, 2300, 2340],
+          [2340, 2360, 2330, 2345],
+          [2345, 2380, 2340, 2370],
+          [2370, 2390, 2350, 2380],
+          [2380, 2410, 2370, 2405],
+          [2405, 2430, 2400, 2420],
+          [2420, 2450, 2415, 2440],
+          [2440, 2460, 2435, 2455],
+          [2455, 2480, 2450, 2475]
+        ],
+        type: 'candlestick',
+        itemStyle: {
+          color: '#10B981',
+          color0: '#EF4444',
+          borderColor: '#10B981',
+          borderColor0: '#EF4444'
+        }
+      }]
+    });
+
+    // ===== HEATMAP CHART =====
+    const heatmapChart = echarts.init(document.getElementById('heatmapChart'));
+    heatmapChart.setOption({
+      backgroundColor: 'transparent',
+      tooltip: {
+        position: 'top',
+        backgroundColor: 'rgba(17, 24, 39, 0.9)',
+        borderColor: '#C5A028',
+        textStyle: { color: '#fff' }
+      },
+      grid: { left: 120, right: 20, top: 10, bottom: 20 },
+      xAxis: {
+        type: 'category',
+        data: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+        axisLabel: { color: '#9CA3AF', fontSize: 11 },
+        axisLine: { lineStyle: { color: '#E5E7EB' } }
+      },
+      yAxis: {
+        type: 'category',
+        data: ['Gold Eagle', 'Buffalo', 'Maple Leaf', 'Krugerrand', 'Silver', 'Platinum', 'Liberty'],
+        axisLabel: { color: '#9CA3AF', fontSize: 11 },
+        axisLine: { lineStyle: { color: '#E5E7EB' } }
+      },
+      visualMap: {
+        min: 0,
+        max: 15,
+        calculable: true,
+        orient: 'vertical',
+        right: 0,
+        top: 'center',
+        inRange: {
+          color: ['#fff', '#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026']
+        },
+        textStyle: { color: '#9CA3AF' }
+      },
+      series: [{
+        data: [
+          [0, 0, 8], [1, 0, 9], [2, 0, 10], [3, 0, 12],
+          [0, 1, 7], [1, 1, 8], [2, 1, 9], [3, 1, 11],
+          [0, 2, 9], [1, 2, 10], [2, 2, 11], [3, 2, 13],
+          [0, 3, 10], [1, 3, 11], [2, 3, 12], [3, 3, 14],
+          [0, 4, 5], [1, 4, 4], [2, 4, 6], [3, 4, 7],
+          [0, 5, 11], [1, 5, 12], [2, 5, 13], [3, 5, 15],
+          [0, 6, 12], [1, 6, 13], [2, 6, 14], [3, 6, 15]
+        ],
+        type: 'heatmap',
+        label: { show: true, color: '#111827', fontSize: 11 }
+      }]
+    });
+
+    // ===== GAUGE CHART =====
+    const gaugeChart = echarts.init(document.getElementById('gaugeChart'));
+    gaugeChart.setOption({
+      backgroundColor: 'transparent',
+      tooltip: { formatter: '{b}: {c}%' },
+      series: [{
+        type: 'gauge',
+        center: ['50%', '60%'],
+        startAngle: 200,
+        endAngle: -20,
+        min: 0,
+        max: 100,
+        splitNumber: 10,
+        axisLine: {
+          lineStyle: {
+            width: 30,
+            color: [[0.3, '#10B981'], [0.7, '#FBBF24'], [1, '#EF4444']]
+          }
+        },
+        progress: { itemStyle: { color: '#C5A028' }, width: 30 },
+        axisLabel: { color: '#9CA3AF', fontSize: 11 },
+        detail: {
+          valueAnimation: true,
+          formatter: '{value}%',
+          color: '#C5A028',
+          fontSize: 20,
+          fontWeight: 700
+        },
+        data: [{ value: 35, name: 'Risk Level' }]
+      }]
+    });
+
+    // ===== TREEMAP CHART =====
+    const treemapChart = echarts.init(document.getElementById('treemapChart'));
+    treemapChart.setOption({
+      backgroundColor: 'transparent',
+      tooltip: {
+        backgroundColor: 'rgba(17, 24, 39, 0.9)',
+        borderColor: '#C5A028',
+        textStyle: { color: '#fff' }
+      },
+      series: [{
+        type: 'treemap',
+        data: [
+          {
+            name: 'Gold',
+            value: 29098,
+            itemStyle: { color: 'rgba(197, 160, 40, 0.8)' }
+          },
+          {
+            name: 'Silver',
+            value: 9427,
+            itemStyle: { color: 'rgba(203, 213, 225, 0.6)' }
+          },
+          {
+            name: 'Platinum',
+            value: 4285,
+            itemStyle: { color: 'rgba(139, 92, 246, 0.7)' }
+          }
+        ],
+        label: { show: true, color: '#fff', fontSize: 13, fontWeight: 'bold' },
+        roam: false
+      }]
+    });
+
+    // Responsive resize
+    window.addEventListener('resize', function() {
+      candlestickChart.resize();
+      heatmapChart.resize();
+      gaugeChart.resize();
+      treemapChart.resize();
+    });
+  });
+</script>
+
+</body>
+</html>
